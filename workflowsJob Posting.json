@@ -1,0 +1,423 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "search_tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-27T11:51:31.280Z",
+  "id": "zvrchZVSLL0uwrbX",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Job Posting",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Team Description Form",
+        "formDescription": "Please add the following information related to the team about to hire new talent",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Department",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Marketing"
+                  },
+                  {
+                    "option": "HR"
+                  },
+                  {
+                    "option": "Technical"
+                  },
+                  {
+                    "option": "Sales"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Team Size",
+              "fieldType": "number",
+              "placeholder": "e.g. 4",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Team Current State",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Required Position (Title)",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Country",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Egypt"
+                  },
+                  {
+                    "option": "UAE"
+                  },
+                  {
+                    "option": "Saudi Arabia"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Currancy",
+              "fieldType": "radio",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "USD"
+                  },
+                  {
+                    "option": "EGP"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -336,
+        -32
+      ],
+      "id": "fcb2ac59-5b0c-471a-83e1-91e36b4183c8",
+      "name": "On form submission",
+      "webhookId": "2a23e07a-9c8e-41d4-9eab-228ad9898ce1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Department: {{ $json.Department }}\nTeam Size: {{ $json['Team Size'] }}\nSituation: {{ $json['Team Current State'] }}\nRequired Position: {{ $json['Required Position (Title)'] }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are a member of our HR team. Your role is to evaluate team needs. You get the situation of the team and the position they want to hire then you generate an evaluation to help the team create a job descripiton.\n\n\n##INSTRUCTIONS\n**Be proffessional\n**Make sure to find weaknesses and strengths\n**Find the most needed skills\n**Don't makeup any data only use what the user provided\n\n##OUTPUT (Strict JSON)\n{\n\"weaknesses\":\" \",\n\"strengths\":\" \",\n\"needed_skills:\" \"\n}\n\n##EXAMPLES\n{\n\"weaknesses\":\"We don't have expert in n8n\",\n\"stengths\": \"The team has experience in crewai\",\n\"needed_skills\":\"n8n\"\n}"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        -96,
+        -32
+      ],
+      "id": "234c4f22-b643-412f-ad38-b9315a95ee5a",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4o-mini",
+        "options": {
+          "responseFormat": "json_object"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        144
+      ],
+      "id": "052f093b-2b90-4767-8ea2-c816e0ecd8b7",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "6xcG3JikR5ViXclx",
+          "name": "aitronix"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Weaknesses: {{ $json.weaknesses }}\nStrengths: {{ $json.strengths }}\nNeeded Skills: {{ $json.needed_skills }}\nRequired Position: {{ $('On form submission').item.json['Required Position (Title)'] }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=You are an expert HR professional with a deep understanding of the job market.You have access to various market data sources and are skilled at identifying relevant skills, salary benchmarks, and market trends to inform hiring decisions.\n\nYour role is to research and analyze the current job market to identify existing skills and salary ranges that align with the team's identified weaknesses and missed tools. Provide a list of potential skills and their corresponding market salaries to help bridge the gap.\n\n##INSTRUCTIONS\n**Today is {{ $now }}\n**Alwayes search inside {{ $('On form submission').item.json.Country }}\n**Get salaries in only {{ $('On form submission').item.json.Currancy }}\n\n##OUTPUT (Strict JSON)\n{\n\"salaries_range\":\"\",\n\"relevant_skills\":[\"\", \"\", \"\"]\n}\n\n##EXAMPLES\n{\n\"salariew_range\":\"Between 100EGP and 150EGP\",\n\"relevant_skills\":[\"n8n\", \"workflow automation\"]\n}\n\n##TOOLS\n**seach_tool: always use this tool to search the internet for needed goal and send it a query"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        256,
+        -32
+      ],
+      "id": "9a4a2407-c57a-4537-a4a2-0db69443300e",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {
+          "responseFormat": "json_object"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        208,
+        176
+      ],
+      "id": "a039034f-94b9-42c5-87dc-37c8f6c3d2b2",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "kLp5hV3hnasMEQnZ",
+          "name": "Workshops"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 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"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "={{ $fromAI(\"query\") }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        352,
+        224
+      ],
+      "id": "9cb33ef6-d4b4-4cfd-ba9e-cfee6c34df30",
+      "name": "search_tool"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"salaries_range\": {\n\t\t\t\"type\": \"string\",\n          \"description\":\"salaries found by AI\"\n\t\t},\n\t\t\"relevant_skills\": {\n\t\t\t\"type\": \"array\",\n\t\t\t\"items\": {\n\t\t\t\t\"type\": \"string\"\n\t\t\t}\n\t\t}\n\t}\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        496,
+        208
+      ],
+      "id": "eb781b52-7dda-40b5-8f82-d25b4a36bcee",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Required Position: {{ $('On form submission').item.json['Required Position (Title)'] }}\nDepartment: {{ $('On form submission').item.json.Department }}\nNeeded Skills: {{ $json.output.relevant_skills }}\nSalary: {{ $json.output.salaries_range }}\nLocation: {{ $('On form submission').item.json.Country }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Using the relevant skills and salary ranges from the market analysis from the previous agent, write a compelling and accurate job description for a {position} role on LinkedIn. Highlight the key responsibilities, required skills (including those identified as weaknesses/missed tools), and the market salary range.\n\n##INSTRUCTIONS\n**Visually appealing and esty to read\n**Mark the output down\n**Take the average salary in the range"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        656,
+        -32
+      ],
+      "id": "728fa0cc-7dcd-4253-ba67-370b50aeae9b",
+      "name": "Basic LLM Chain1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        672,
+        176
+      ],
+      "id": "b014c653-2d9b-45f9-a04d-17e68c088fb3",
+      "name": "OpenRouter Chat Model2",
+      "credentials": {
+        "openRouterApi": {
+          "id": "6xcG3JikR5ViXclx",
+          "name": "aitronix"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "697626167",
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1008,
+        -32
+      ],
+      "id": "880499d2-dec0-44e9-8b5b-383069574233",
+      "name": "Send a text message",
+      "webhookId": "44b04096-f124-408a-bc18-ba9d0792dc9d",
+      "credentials": {
+        "telegramApi": {
+          "id": "ukZBbxWO4IUF3n1H",
+          "name": "slta3_burger_cs"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-09-27T11:51:31.284Z",
+      "createdAt": "2025-09-27T11:51:31.284Z",
+      "role": "workflow:owner",
+      "workflowId": "zvrchZVSLL0uwrbX",
+      "projectId": "10ThCd3MwK9YIhm3"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2025-09-27T11:51:36.104Z",
+      "createdAt": "2025-09-27T11:51:36.104Z",
+      "id": "0d5YtsgyamL9ieTh",
+      "name": "HR"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-10-30T10:27:17.000Z",
+  "versionId": "4b683364-05cb-40bc-9d06-2d4e1dd12003"
+}
