@@ -254,6 +254,207 @@
           }
         ]
       ]
+    },
+    "Transcribe audio1": {
+      "main": [
+        [
+          {
+            "node": "human in the loop2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message8": {
+      "main": [
+        [
+          {
+            "node": "Transcribe audio1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "optimization2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch2": {
+      "main": [
+        [
+          {
+            "node": "optimization2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "optimization2": {
+      "main": [
+        [
+          {
+            "node": "Send an optimized message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "human in the loop2": {
+      "main": [
+        [
+          {
+            "node": "Switch2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a text message8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe audio2": {
+      "main": [
+        [
+          {
+            "node": "human in the loop3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message9": {
+      "main": [
+        [
+          {
+            "node": "Write Files from Disk1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger2": {
+      "main": [
+        [
+          {
+            "node": "Send a text message9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "optimization3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch3": {
+      "main": [
+        [
+          {
+            "node": "optimization3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "optimization3": {
+      "main": [
+        [
+          {
+            "node": "Send an optimized message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "human in the loop3": {
+      "main": [
+        [
+          {
+            "node": "Switch3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command2": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Transcribe audio2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write Files from Disk1": {
+      "main": [
+        [
+          {
+            "node": "Execute Command2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2026-01-25T05:46:48.732Z",
@@ -434,7 +635,7 @@
     },
     {
       "parameters": {
-        "command": "ffmpeg -i /tmp/input_audio.mp3 -f segment -segment_time 60 -c copy /tmp/output_%03d.wav"
+        "command": "ffmpeg -i /tmp/input_audio.mp3 -f segment -segment_time 60 -c copy /tmp/output_%03d.m4a"
       },
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
@@ -999,6 +1200,618 @@
           "name": "Telegram account"
         }
       }
+    },
+    {
+      "parameters": {
+        "resource": "speech",
+        "operation": "speechToText",
+        "file": "audio",
+        "additionalOptions": {},
+        "requestOptions": {}
+      },
+      "type": "@elevenlabs/n8n-nodes-elevenlabs.elevenLabs",
+      "typeVersion": 1,
+      "position": [
+        128,
+        1008
+      ],
+      "id": "bd8e77b6-e9bd-48bc-b61d-678d3dd347eb",
+      "name": "Transcribe audio1",
+      "credentials": {
+        "elevenLabsApi": {
+          "id": "2IlJ0UV7CwFeBuic",
+          "name": "ElevenLabs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "6526726666",
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        864,
+        1152
+      ],
+      "id": "93a49374-d6ab-4a63-91fb-b760eb9836b0",
+      "name": "Send a text message6",
+      "webhookId": "8078b984-1c4c-4d0a-a559-f54a4695336b",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "={{ $json.message.chat.id }}",
+        "message": "yie",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "audio",
+              "fieldType": "file",
+              "multipleFiles": false
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -96,
+        1008
+      ],
+      "id": "62656c83-5ed3-42e3-9897-15763a34ad9f",
+      "name": "Send a text message8",
+      "webhookId": "4551dbef-5090-4897-b9ad-95b51e292524",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-r1-0528:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        880,
+        976
+      ],
+      "id": "d53717b1-bcac-409d-b23c-ef71ea3a2274",
+      "name": "OpenRouter Chat Model2",
+      "credentials": {
+        "openRouterApi": {
+          "id": "BydLlZ8E9UmD3tL5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "Send it to ai to optimize it",
+                    "rightValue": "={{ $json.data['Enter your choice '] }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "1a4bf7bb-d2ca-496e-8128-f2e1b3343989"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Optimization "
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6394e3a9-5611-40d6-a727-3c28efb13d08",
+                    "leftValue": "You wil do it by your self",
+                    "rightValue": "={{ $json.data['Enter your choice '] }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Send it now"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        576,
+        1008
+      ],
+      "id": "23d9f1ef-2b89-4195-b9c9-1edd42fcda82",
+      "name": "Switch2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Transcribe audio1').item.json.text }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "الآيات والأحاديث توضع في إطار منفصل مع التخريج والأمثلة.\n\nباقي المحتوى (التعاريف، الشروح، الأسباب، الفوائد، الأحكام، الإجماعات، الأقوال، المقارنات، الأمثلة، الإحصائيات، التواريخ، الأسماء) يتم تفصيله وتنظيمه بدقة.\n\n✅ سأعمل على النص كاملاً وفق هذا الهيكل التفصيلي:\n📌 أولاً: العناوين\nعناوين رئيسية 🔹\n\nعناوين فرعية 🔸\n\nعناوين فرعية من الدرجة الثالثة 🔹 (إن لزم)\n\n📌 ثانياً: النصوص الشرعية (الآيات والأحاديث)\nتوضع في إطار منفصل.\n\nيُسبقها عنوان مثل: «الدليل من القرآن» أو «الدليل من السنة».\n\nتُكتب داخل اقتباس « ».\n\nيُذكر التخريج بدقة.\n\nيُضاف شرح مختصر أو مثال تطبيقي إن ورد في النص.\n\n📌 ثالثاً: التعريفات والمصطلحات\nالمصطلح: بخط غامق.\n\nالتعريف: في سطر منفصل.\n\nيُضاف مثال توضيحي.\n\nيُذكر أقسامه أو أنواعه إن وجدت.\n\n📌 رابعاً: الشروح والتفصيلات\nأحلل الفكرة الطويلة إلى نقاط رئيسية.\n\nكل نقطة رئيسية أحتها إلى نقاط فرعية.\n\nكل نقطة فرعية أدعمها بـ:\n\n✅ مثال\n\n❌ استثناء أو نقيض (إن وجد)\n\n🔍 سبب أو حكمة (إن وجد)\n\n📌 خامساً: المقارنات\nأعرضها في جدول أو نقطتين متقابلتين.\n\nأوجه الشبه ✅\n\nأوجه الاختلاف ❌\n\n📌 سادساً: القوائم والأرقام\nالإحصائيات: أعرضها كنقاط منفصلة.\n\nالتواريخ: أرتبها زمنياً إن لزم.\n\nالأسماء: أوضح دور كل اسم في النص.\n\n📌 سابعاً: الخلاصة\nفي نهاية كل قسم رئيسي، أضع نقاط موجزة تلخص المعلومة.\n\n"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        800,
+        752
+      ],
+      "id": "40849ea9-1c4e-418b-93d7-954ac8cef5d5",
+      "name": "optimization2"
+    },
+    {
+      "parameters": {
+        "chatId": "6526726666",
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1152,
+        864
+      ],
+      "id": "75f25888-c3d7-4a88-b1f2-e8ce387c57a6",
+      "name": "Send an optimized message2",
+      "webhookId": "8078b984-1c4c-4d0a-a559-f54a4695336b",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "message": "Please choose one of the following for the ai",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Enter your choice ",
+              "fieldType": "radio",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Send it to ai to optimize it"
+                  },
+                  {
+                    "option": "You wil do it by your self"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        352,
+        1008
+      ],
+      "id": "837aa43d-0e20-46b8-9484-b859c9041e99",
+      "name": "human in the loop2",
+      "webhookId": "b611b8fb-9802-4d16-b052-afe393e7546f",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -320,
+        1008
+      ],
+      "id": "cea5647f-2223-45bb-b874-a0e071f2166f",
+      "name": "Telegram Trigger",
+      "webhookId": "5abf590c-2cde-43b7-87e9-7be155312ad8",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "speech",
+        "operation": "speechToText",
+        "file": "audio",
+        "additionalOptions": {},
+        "requestOptions": {}
+      },
+      "type": "@elevenlabs/n8n-nodes-elevenlabs.elevenLabs",
+      "typeVersion": 1,
+      "position": [
+        992,
+        1712
+      ],
+      "id": "af8cd38e-cf26-46c9-b173-9ad216289ab3",
+      "name": "Transcribe audio2",
+      "credentials": {
+        "elevenLabsApi": {
+          "id": "2IlJ0UV7CwFeBuic",
+          "name": "ElevenLabs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "6526726666",
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        576,
+        2384
+      ],
+      "id": "76374ab5-47d8-405d-92a0-35e589a2366e",
+      "name": "Send a text message7",
+      "webhookId": "8078b984-1c4c-4d0a-a559-f54a4695336b",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "={{ $json.message.chat.id }}",
+        "message": "yie",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "audio",
+              "fieldType": "file",
+              "multipleFiles": false
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        192,
+        1712
+      ],
+      "id": "25e1ad9c-79d3-41b8-942d-8ce1985d058f",
+      "name": "Send a text message9",
+      "webhookId": "4551dbef-5090-4897-b9ad-95b51e292524",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        1712
+      ],
+      "id": "1be03ce6-9df2-4299-b3a0-47a41fc24d45",
+      "name": "Telegram Trigger2",
+      "webhookId": "5abf590c-2cde-43b7-87e9-7be155312ad8",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-r1-0528:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        592,
+        2208
+      ],
+      "id": "6072d05b-8789-4bfe-86a6-bde388347078",
+      "name": "OpenRouter Chat Model3",
+      "credentials": {
+        "openRouterApi": {
+          "id": "BydLlZ8E9UmD3tL5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "Send it to ai to optimize it",
+                    "rightValue": "={{ $json.data['Enter your choice '] }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "1a4bf7bb-d2ca-496e-8128-f2e1b3343989"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Optimization "
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6394e3a9-5611-40d6-a727-3c28efb13d08",
+                    "leftValue": "You wil do it by your self",
+                    "rightValue": "={{ $json.data['Enter your choice '] }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Send it now"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        288,
+        2240
+      ],
+      "id": "174a3923-bb01-4dcb-9483-efde418124b2",
+      "name": "Switch3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Transcribe audio2').item.json.text }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "الآيات والأحاديث توضع في إطار منفصل مع التخريج والأمثلة.\n\nباقي المحتوى (التعاريف، الشروح، الأسباب، الفوائد، الأحكام، الإجماعات، الأقوال، المقارنات، الأمثلة، الإحصائيات، التواريخ، الأسماء) يتم تفصيله وتنظيمه بدقة.\n\n✅ سأعمل على النص كاملاً وفق هذا الهيكل التفصيلي:\n📌 أولاً: العناوين\nعناوين رئيسية 🔹\n\nعناوين فرعية 🔸\n\nعناوين فرعية من الدرجة الثالثة 🔹 (إن لزم)\n\n📌 ثانياً: النصوص الشرعية (الآيات والأحاديث)\nتوضع في إطار منفصل.\n\nيُسبقها عنوان مثل: «الدليل من القرآن» أو «الدليل من السنة».\n\nتُكتب داخل اقتباس « ».\n\nيُذكر التخريج بدقة.\n\nيُضاف شرح مختصر أو مثال تطبيقي إن ورد في النص.\n\n📌 ثالثاً: التعريفات والمصطلحات\nالمصطلح: بخط غامق.\n\nالتعريف: في سطر منفصل.\n\nيُضاف مثال توضيحي.\n\nيُذكر أقسامه أو أنواعه إن وجدت.\n\n📌 رابعاً: الشروح والتفصيلات\nأحلل الفكرة الطويلة إلى نقاط رئيسية.\n\nكل نقطة رئيسية أحتها إلى نقاط فرعية.\n\nكل نقطة فرعية أدعمها بـ:\n\n✅ مثال\n\n❌ استثناء أو نقيض (إن وجد)\n\n🔍 سبب أو حكمة (إن وجد)\n\n📌 خامساً: المقارنات\nأعرضها في جدول أو نقطتين متقابلتين.\n\nأوجه الشبه ✅\n\nأوجه الاختلاف ❌\n\n📌 سادساً: القوائم والأرقام\nالإحصائيات: أعرضها كنقاط منفصلة.\n\nالتواريخ: أرتبها زمنياً إن لزم.\n\nالأسماء: أوضح دور كل اسم في النص.\n\n📌 سابعاً: الخلاصة\nفي نهاية كل قسم رئيسي، أضع نقاط موجزة تلخص المعلومة.\n\n"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        512,
+        1984
+      ],
+      "id": "d240d407-1613-4b03-931a-1279352ae488",
+      "name": "optimization3"
+    },
+    {
+      "parameters": {
+        "chatId": "6526726666",
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        864,
+        2096
+      ],
+      "id": "78b5b6ed-3b54-4623-aaaf-2c8ab39dce46",
+      "name": "Send an optimized message3",
+      "webhookId": "8078b984-1c4c-4d0a-a559-f54a4695336b",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "={{ $('Telegram Trigger2').item.json.message.from.id }}",
+        "message": "Please choose one of the following for the ai",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Enter your choice ",
+              "fieldType": "radio",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Send it to ai to optimize it"
+                  },
+                  {
+                    "option": "You wil do it by your self"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        64,
+        2240
+      ],
+      "id": "3d11f663-a385-4109-9c66-caa05eba996d",
+      "name": "human in the loop3",
+      "webhookId": "b611b8fb-9802-4d16-b052-afe393e7546f",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "rm -f /tmp/output_*.m4a\n\nffmpeg -i /tmp/input_audio.wav -f segment -segment_time 600 -c:a aac -b:a 128k -reset_timestamps 1 /tmp/output_%03d.m4a\n\n"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        608,
+        1712
+      ],
+      "id": "3d6d7071-1d2a-45c8-a37a-adb9dc83a3b4",
+      "name": "Execute Command2"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/tmp/output_*.m4a",
+        "options": {
+          "dataPropertyName": "audio"
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        816,
+        1712
+      ],
+      "id": "d735dd46-dfdf-40b6-972d-8a4bd1e23ae8",
+      "name": "Read/Write Files from Disk",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/tmp/input_audio.wav",
+        "dataPropertyName": "audio",
+        "options": {
+          "append": false
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        384,
+        1712
+      ],
+      "id": "afaa218b-3d7f-4ab8-8b83-11ea9fab18ea",
+      "name": "Write Files from Disk1"
     }
   ],
   "pinData": {},
@@ -1024,6 +1837,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-02-10T13:27:41.000Z",
-  "versionId": "f464ea3d-5791-4a66-ac63-d197b30e1254"
+  "updatedAt": "2026-02-11T17:14:18.000Z",
+  "versionId": "d103283d-dfe0-410b-b946-bb319b3b61fa"
 }
