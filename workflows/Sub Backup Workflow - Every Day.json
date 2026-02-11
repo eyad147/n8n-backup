@@ -1,0 +1,948 @@
+{
+  "active": false,
+  "connections": {
+    "Get File": {
+      "main": [
+        [
+          {
+            "node": "Merge Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If file too large": {
+      "main": [
+        [
+          {
+            "node": "Get File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Items": {
+      "main": [
+        [
+          {
+            "node": "isDiffOrNew",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "isDiffOrNew": {
+      "main": [
+        [
+          {
+            "node": "Check Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Status": {
+      "main": [
+        [
+          {
+            "node": "Same file - Do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "File is different",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "File is new",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Same file - Do nothing": {
+      "main": [
+        [
+          {
+            "node": "Return",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File is different": {
+      "main": [
+        [
+          {
+            "node": "Edit existing file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File is new": {
+      "main": [
+        [
+          {
+            "node": "Create new file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create new file": {
+      "main": [
+        [
+          {
+            "node": "Return",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit existing file": {
+      "main": [
+        [
+          {
+            "node": "Return",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get file data": {
+      "main": [
+        [
+          {
+            "node": "If file too large",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Globals": {
+      "main": [
+        [
+          {
+            "node": "Get file data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "backup": {
+      "main": [
+        [
+          {
+            "node": "Globals",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge Items",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-10T15:17:24.033Z",
+  "id": "Bw2DfzZPpWBQ510C",
+  "isArchived": false,
+  "meta": null,
+  "name": "Sub Backup Workflow - Every Day",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8d513345-6484-431f-afb7-7cf045c90f4f",
+              "name": "Done",
+              "type": "boolean",
+              "value": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d52b274f-538d-454f-b8f9-7452f99bc92e",
+      "name": "Return",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2208,
+        -112
+      ],
+      "typeVersion": 3.3
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.download_url }}",
+        "options": {}
+      },
+      "id": "23f47724-eedb-4d61-873d-4c0b1fa3c00c",
+      "name": "Get File",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1312,
+        -240
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 1,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "45ce825e-9fa6-430c-8931-9aaf22c42585",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.content }}",
+              "rightValue": ""
+            },
+            {
+              "id": "9619a55f-7fb1-4f24-b1a7-7aeb82365806",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.error }}",
+              "rightValue": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ac005251-1eb2-4afe-a838-70836d09717a",
+      "name": "If file too large",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1104,
+        -208
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "2bb987f1-4154-4497-bb74-7702e5ffe5fe",
+      "name": "Merge Items",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        1072,
+        64
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "const orderJsonKeys = (jsonObj) => {\n  const ordered = {};\n  Object.keys(jsonObj).sort().forEach(key => {\n    ordered[key] = jsonObj[key];\n  });\n  return ordered;\n}\n\n// Check if file returned with content\nif (Object.keys($input.all()[0].json).includes(\"content\")) {\n  // Decode base64 content and parse JSON\n  const origWorkflow = JSON.parse(Buffer.from($input.all()[0].json.content, 'base64').toString());\n  const n8nWorkflow = $input.all()[1].json;\n  \n  // Order JSON objects\n  const orderedOriginal = orderJsonKeys(origWorkflow);\n  const orderedActual = orderJsonKeys(n8nWorkflow);\n\n  // Determine difference\n  if (JSON.stringify(orderedOriginal) === JSON.stringify(orderedActual)) {\n    $input.all()[0].json.github_status = \"same\";\n  } else {\n    $input.all()[0].json.github_status = \"different\";\n    $input.all()[0].json.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n  }\n  $input.all()[0].json.content_decoded = orderedOriginal;\n// No file returned / new workflow\n} else if (Object.keys($input.all()[0].json).includes(\"data\")) {\n  const origWorkflow = JSON.parse($input.all()[0].json.data);\n  const n8nWorkflow = $input.all()[1].json;\n  \n  // Order JSON objects\n  const orderedOriginal = orderJsonKeys(origWorkflow);\n  const orderedActual = orderJsonKeys(n8nWorkflow);\n\n  // Determine difference\n  if (JSON.stringify(orderedOriginal) === JSON.stringify(orderedActual)) {\n    $input.all()[0].json.github_status = \"same\";\n  } else {\n    $input.all()[0].json.github_status = \"different\";\n    $input.all()[0].json.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n  }\n  $input.all()[0].json.content_decoded = orderedOriginal;\n\n} else {\n  // Order JSON object\n  const n8nWorkflow = $input.all()[1].json;\n  const orderedActual = orderJsonKeys(n8nWorkflow);\n  \n  // Proper formatting\n  $input.all()[0].json.github_status = \"new\";\n  $input.all()[0].json.n8n_data_stringy = JSON.stringify(orderedActual, null, 2);\n}\n\n// Return items\nreturn $input.all();"
+      },
+      "id": "b3b985fb-9f02-45bb-b400-a05cbf5bfd2a",
+      "name": "isDiffOrNew",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1312,
+        64
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{$json.github_status}}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "same"
+            },
+            {
+              "value2": "different",
+              "output": 1
+            },
+            {
+              "value2": "new",
+              "output": 2
+            }
+          ]
+        }
+      },
+      "id": "ef5ad58c-5ad0-4fb2-9c06-4823a75bcaac",
+      "name": "Check Status",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        1520,
+        64
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "6a070c00-97e5-4e49-8d0a-63d186817648",
+      "name": "Same file - Do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        1744,
+        -112
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "8237a4fe-68a1-4691-862f-b6f1edbbf060",
+      "name": "File is different",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        1744,
+        64
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "96b2e320-4940-432f-874c-da0c6e366014",
+      "name": "File is new",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        1744,
+        224
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Globals').item.json.repo.owner }}"
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Globals').item.json.repo.name }}"
+        },
+        "filePath": "={{ $('Globals').item.json.repo.path }}{{$('backup').first().json.name}}.json",
+        "fileContent": "={{$('isDiffOrNew').item.json[\"n8n_data_stringy\"]}}",
+        "commitMessage": "={{$('backup').first().json.name}} ({{$json.github_status}})"
+      },
+      "id": "9e6c39e6-7c2c-4e75-9ac6-53b7e4598940",
+      "name": "Create new file",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        1968,
+        224
+      ],
+      "webhookId": "e5e4ce8b-74a3-4b94-83ca-351edc280faf",
+      "typeVersion": 1,
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "5smJ0oYbMl5OV3Yc",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "file",
+        "operation": "edit",
+        "owner": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Globals').item.json.repo.owner }}"
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Globals').item.json.repo.name }}"
+        },
+        "filePath": "={{ $('Globals').item.json.repo.path }}{{$('backup').first().json.name}}.json",
+        "fileContent": "={{$('isDiffOrNew').item.json[\"n8n_data_stringy\"]}}",
+        "commitMessage": "={{$('backup').first().json.name}} ({{$json.github_status}})"
+      },
+      "id": "88c35390-0ba8-496d-b4ce-fb43522d4ba7",
+      "name": "Edit existing file",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        1968,
+        48
+      ],
+      "webhookId": "a57e71de-4960-4d25-a59f-1a9e2e96aff5",
+      "typeVersion": 1,
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "5smJ0oYbMl5OV3Yc",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "file",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $json.repo.owner }}"
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $json.repo.name }}"
+        },
+        "filePath": "={{ $json.repo.path }}{{ $('backup').item.json.name }}.json",
+        "asBinaryProperty": false,
+        "additionalParameters": {}
+      },
+      "id": "b92460f3-a936-4e97-bb8e-82b4a68daa40",
+      "name": "Get file data",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        896,
+        -384
+      ],
+      "webhookId": "743111c3-2c21-4658-8097-a9fe966f43d2",
+      "typeVersion": 1,
+      "alwaysOutputData": true,
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "5smJ0oYbMl5OV3Yc",
+          "name": "GitHub account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6cf546c5-5737-4dbd-851b-17d68e0a3780",
+              "name": "repo.owner",
+              "type": "string",
+              "value": "eyad147"
+            },
+            {
+              "id": "452efa28-2dc6-4ea3-a7a2-c35d100d0382",
+              "name": "repo.name",
+              "type": "string",
+              "value": "n8n-backup"
+            },
+            {
+              "id": "81c4dc54-86bf-4432-a23f-22c7ea831e74",
+              "name": "repo.path",
+              "type": "string",
+              "value": "workflows/"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5b4bf544-b15d-4bac-bfe0-8beac12d1ca6",
+      "name": "Globals",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        688,
+        -48
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "id": "a165cdbb-b16e-4cd8-b233-82b92c656897",
+      "name": "backup",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        224,
+        64
+      ],
+      "typeVersion": 1.1
+    }
+  ],
+  "pinData": {
+    "backup": [
+      {
+        "json": {
+          "updatedAt": "2025-10-30T10:27:17.000Z",
+          "createdAt": "2025-09-27T11:51:31.280Z",
+          "id": "zvrchZVSLL0uwrbX",
+          "name": "Job Posting",
+          "active": false,
+          "isArchived": true,
+          "nodes": [
+            {
+              "parameters": {
+                "formTitle": "Team Description Form",
+                "formDescription": "Please add the following information related to the team about to hire new talent",
+                "formFields": {
+                  "values": [
+                    {
+                      "fieldLabel": "Department",
+                      "fieldType": "dropdown",
+                      "fieldOptions": {
+                        "values": [
+                          {
+                            "option": "Marketing"
+                          },
+                          {
+                            "option": "HR"
+                          },
+                          {
+                            "option": "Technical"
+                          },
+                          {
+                            "option": "Sales"
+                          }
+                        ]
+                      },
+                      "requiredField": true
+                    },
+                    {
+                      "fieldLabel": "Team Size",
+                      "fieldType": "number",
+                      "placeholder": "e.g. 4",
+                      "requiredField": true
+                    },
+                    {
+                      "fieldLabel": "Team Current State",
+                      "requiredField": true
+                    },
+                    {
+                      "fieldLabel": "Required Position (Title)",
+                      "requiredField": true
+                    },
+                    {
+                      "fieldLabel": "Country",
+                      "fieldType": "dropdown",
+                      "fieldOptions": {
+                        "values": [
+                          {
+                            "option": "Egypt"
+                          },
+                          {
+                            "option": "UAE"
+                          },
+                          {
+                            "option": "Saudi Arabia"
+                          }
+                        ]
+                      },
+                      "requiredField": true
+                    },
+                    {
+                      "fieldLabel": "Currancy",
+                      "fieldType": "radio",
+                      "fieldOptions": {
+                        "values": [
+                          {
+                            "option": "USD"
+                          },
+                          {
+                            "option": "EGP"
+                          }
+                        ]
+                      },
+                      "requiredField": true
+                    }
+                  ]
+                },
+                "options": {}
+              },
+              "type": "n8n-nodes-base.formTrigger",
+              "typeVersion": 2.3,
+              "position": [
+                -336,
+                -32
+              ],
+              "id": "fcb2ac59-5b0c-471a-83e1-91e36b4183c8",
+              "name": "On form submission",
+              "webhookId": "2a23e07a-9c8e-41d4-9eab-228ad9898ce1"
+            },
+            {
+              "parameters": {
+                "promptType": "define",
+                "text": "=Department: {{ $json.Department }}\nTeam Size: {{ $json['Team Size'] }}\nSituation: {{ $json['Team Current State'] }}\nRequired Position: {{ $json['Required Position (Title)'] }}",
+                "messages": {
+                  "messageValues": [
+                    {
+                      "message": "=You are a member of our HR team. Your role is to evaluate team needs. You get the situation of the team and the position they want to hire then you generate an evaluation to help the team create a job descripiton.\n\n\n##INSTRUCTIONS\n**Be proffessional\n**Make sure to find weaknesses and strengths\n**Find the most needed skills\n**Don't makeup any data only use what the user provided\n\n##OUTPUT (Strict JSON)\n{\n\"weaknesses\":\" \",\n\"strengths\":\" \",\n\"needed_skills:\" \"\n}\n\n##EXAMPLES\n{\n\"weaknesses\":\"We don't have expert in n8n\",\n\"stengths\": \"The team has experience in crewai\",\n\"needed_skills\":\"n8n\"\n}"
+                    }
+                  ]
+                },
+                "batching": {}
+              },
+              "type": "@n8n/n8n-nodes-langchain.chainLlm",
+              "typeVersion": 1.7,
+              "position": [
+                -96,
+                -32
+              ],
+              "id": "234c4f22-b643-412f-ad38-b9315a95ee5a",
+              "name": "Basic LLM Chain"
+            },
+            {
+              "parameters": {
+                "model": "openai/gpt-4o-mini",
+                "options": {
+                  "responseFormat": "json_object"
+                }
+              },
+              "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+              "typeVersion": 1,
+              "position": [
+                -96,
+                144
+              ],
+              "id": "052f093b-2b90-4767-8ea2-c816e0ecd8b7",
+              "name": "OpenRouter Chat Model",
+              "credentials": {
+                "openRouterApi": {
+                  "id": "6xcG3JikR5ViXclx",
+                  "name": "aitronix"
+                }
+              }
+            },
+            {
+              "parameters": {
+                "promptType": "define",
+                "text": "=Weaknesses: {{ $json.weaknesses }}\nStrengths: {{ $json.strengths }}\nNeeded Skills: {{ $json.needed_skills }}\nRequired Position: {{ $('On form submission').item.json['Required Position (Title)'] }}",
+                "hasOutputParser": true,
+                "options": {
+                  "systemMessage": "=You are an expert HR professional with a deep understanding of the job market.You have access to various market data sources and are skilled at identifying relevant skills, salary benchmarks, and market trends to inform hiring decisions.\n\nYour role is to research and analyze the current job market to identify existing skills and salary ranges that align with the team's identified weaknesses and missed tools. Provide a list of potential skills and their corresponding market salaries to help bridge the gap.\n\n##INSTRUCTIONS\n**Today is {{ $now }}\n**Alwayes search inside {{ $('On form submission').item.json.Country }}\n**Get salaries in only {{ $('On form submission').item.json.Currancy }}\n\n##OUTPUT (Strict JSON)\n{\n\"salaries_range\":\"\",\n\"relevant_skills\":[\"\", \"\", \"\"]\n}\n\n##EXAMPLES\n{\n\"salariew_range\":\"Between 100EGP and 150EGP\",\n\"relevant_skills\":[\"n8n\", \"workflow automation\"]\n}\n\n##TOOLS\n**seach_tool: always use this tool to search the internet for needed goal and send it a query"
+                }
+              },
+              "type": "@n8n/n8n-nodes-langchain.agent",
+              "typeVersion": 2.2,
+              "position": [
+                256,
+                -32
+              ],
+              "id": "9a4a2407-c57a-4537-a4a2-0db69443300e",
+              "name": "AI Agent"
+            },
+            {
+              "parameters": {
+                "options": {
+                  "responseFormat": "json_object"
+                }
+              },
+              "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+              "typeVersion": 1,
+              "position": [
+                208,
+                176
+              ],
+              "id": "a039034f-94b9-42c5-87dc-37c8f6c3d2b2",
+              "name": "OpenRouter Chat Model1",
+              "credentials": {
+                "openRouterApi": {
+                  "id": "kLp5hV3hnasMEQnZ",
+                  "name": "Workshops"
+                }
+              }
+            },
+            {
+              "parameters": {
+                "method": "POST",
+                "url": "https://api.tavily.com/search",
+                "sendHeaders": true,
+                "headerParameters": {
+                  "parameters": [
+                    {
+                      "name": "Authorization",
+                      "value": "Bearer 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"
+                    }
+                  ]
+                },
+                "sendBody": true,
+                "bodyParameters": {
+                  "parameters": [
+                    {
+                      "name": "query",
+                      "value": "={{ $fromAI(\"query\") }}"
+                    }
+                  ]
+                },
+                "options": {}
+              },
+              "type": "n8n-nodes-base.httpRequestTool",
+              "typeVersion": 4.2,
+              "position": [
+                352,
+                224
+              ],
+              "id": "9cb33ef6-d4b4-4cfd-ba9e-cfee6c34df30",
+              "name": "search_tool"
+            },
+            {
+              "parameters": {
+                "schemaType": "manual",
+                "inputSchema": "{\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"salaries_range\": {\n\t\t\t\"type\": \"string\",\n          \"description\":\"salaries found by AI\"\n\t\t},\n\t\t\"relevant_skills\": {\n\t\t\t\"type\": \"array\",\n\t\t\t\"items\": {\n\t\t\t\t\"type\": \"string\"\n\t\t\t}\n\t\t}\n\t}\n}"
+              },
+              "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+              "typeVersion": 1.3,
+              "position": [
+                496,
+                208
+              ],
+              "id": "eb781b52-7dda-40b5-8f82-d25b4a36bcee",
+              "name": "Structured Output Parser"
+            },
+            {
+              "parameters": {
+                "promptType": "define",
+                "text": "=Required Position: {{ $('On form submission').item.json['Required Position (Title)'] }}\nDepartment: {{ $('On form submission').item.json.Department }}\nNeeded Skills: {{ $json.output.relevant_skills }}\nSalary: {{ $json.output.salaries_range }}\nLocation: {{ $('On form submission').item.json.Country }}",
+                "messages": {
+                  "messageValues": [
+                    {
+                      "message": "=Using the relevant skills and salary ranges from the market analysis from the previous agent, write a compelling and accurate job description for a {position} role on LinkedIn. Highlight the key responsibilities, required skills (including those identified as weaknesses/missed tools), and the market salary range.\n\n##INSTRUCTIONS\n**Visually appealing and esty to read\n**Mark the output down\n**Take the average salary in the range"
+                    }
+                  ]
+                },
+                "batching": {}
+              },
+              "type": "@n8n/n8n-nodes-langchain.chainLlm",
+              "typeVersion": 1.7,
+              "position": [
+                656,
+                -32
+              ],
+              "id": "728fa0cc-7dcd-4253-ba67-370b50aeae9b",
+              "name": "Basic LLM Chain1"
+            },
+            {
+              "parameters": {
+                "options": {}
+              },
+              "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+              "typeVersion": 1,
+              "position": [
+                672,
+                176
+              ],
+              "id": "b014c653-2d9b-45f9-a04d-17e68c088fb3",
+              "name": "OpenRouter Chat Model2",
+              "credentials": {
+                "openRouterApi": {
+                  "id": "6xcG3JikR5ViXclx",
+                  "name": "aitronix"
+                }
+              }
+            },
+            {
+              "parameters": {
+                "chatId": "697626167",
+                "text": "={{ $json.text }}",
+                "additionalFields": {
+                  "appendAttribution": false
+                }
+              },
+              "type": "n8n-nodes-base.telegram",
+              "typeVersion": 1.2,
+              "position": [
+                1008,
+                -32
+              ],
+              "id": "880499d2-dec0-44e9-8b5b-383069574233",
+              "name": "Send a text message",
+              "webhookId": "44b04096-f124-408a-bc18-ba9d0792dc9d",
+              "credentials": {
+                "telegramApi": {
+                  "id": "ukZBbxWO4IUF3n1H",
+                  "name": "slta3_burger_cs"
+                }
+              }
+            }
+          ],
+          "connections": {
+            "On form submission": {
+              "main": [
+                [
+                  {
+                    "node": "Basic LLM Chain",
+                    "type": "main",
+                    "index": 0
+                  }
+                ]
+              ]
+            },
+            "OpenRouter Chat Model": {
+              "ai_languageModel": [
+                [
+                  {
+                    "node": "Basic LLM Chain",
+                    "type": "ai_languageModel",
+                    "index": 0
+                  }
+                ]
+              ]
+            },
+            "Basic LLM Chain": {
+              "main": [
+                [
+                  {
+                    "node": "AI Agent",
+                    "type": "main",
+                    "index": 0
+                  }
+                ]
+              ]
+            },
+            "OpenRouter Chat Model1": {
+              "ai_languageModel": [
+                [
+                  {
+                    "node": "AI Agent",
+                    "type": "ai_languageModel",
+                    "index": 0
+                  }
+                ]
+              ]
+            },
+            "search_tool": {
+              "ai_tool": [
+                [
+                  {
+                    "node": "AI Agent",
+                    "type": "ai_tool",
+                    "index": 0
+                  }
+                ]
+              ]
+            },
+            "Structured Output Parser": {
+              "ai_outputParser": [
+                [
+                  {
+                    "node": "AI Agent",
+                    "type": "ai_outputParser",
+                    "index": 0
+                  }
+                ]
+              ]
+            },
+            "AI Agent": {
+              "main": [
+                [
+                  {
+                    "node": "Basic LLM Chain1",
+                    "type": "main",
+                    "index": 0
+                  }
+                ]
+              ]
+            },
+            "OpenRouter Chat Model2": {
+              "ai_languageModel": [
+                [
+                  {
+                    "node": "Basic LLM Chain1",
+                    "type": "ai_languageModel",
+                    "index": 0
+                  }
+                ]
+              ]
+            },
+            "Basic LLM Chain1": {
+              "main": [
+                [
+                  {
+                    "node": "Send a text message",
+                    "type": "main",
+                    "index": 0
+                  }
+                ]
+              ]
+            }
+          },
+          "settings": {
+            "executionOrder": "v1"
+          },
+          "staticData": null,
+          "meta": {
+            "templateCredsSetupCompleted": true
+          },
+          "pinData": {},
+          "versionId": "4b683364-05cb-40bc-9d06-2d4e1dd12003",
+          "activeVersionId": null,
+          "triggerCount": 1,
+          "shared": [
+            {
+              "updatedAt": "2025-09-27T11:51:31.284Z",
+              "createdAt": "2025-09-27T11:51:31.284Z",
+              "role": "workflow:owner",
+              "workflowId": "zvrchZVSLL0uwrbX",
+              "projectId": "10ThCd3MwK9YIhm3"
+            }
+          ],
+          "activeVersion": null,
+          "tags": [
+            {
+              "updatedAt": "2025-09-27T11:51:36.104Z",
+              "createdAt": "2025-09-27T11:51:36.104Z",
+              "id": "0d5YtsgyamL9ieTh",
+              "name": "HR"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2026-02-10T15:17:24.037Z",
+      "updatedAt": "2026-02-10T15:17:24.037Z",
+      "role": "workflow:owner",
+      "workflowId": "Bw2DfzZPpWBQ510C",
+      "projectId": "MwHoDPY5SoqTt3hY"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-02-11T06:15:20.000Z",
+  "versionId": "79e1748a-accc-4ac4-9a66-fd3aad906411"
+}
