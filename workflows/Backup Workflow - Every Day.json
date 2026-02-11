@@ -1,0 +1,264 @@
+{
+  "active": false,
+  "connections": {
+    "n8n": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Call 'Sub Backup Workflow - Every Day'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "n8n",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "n8n",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Sub Backup Workflow - Every Day'": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-10T15:16:19.456Z",
+  "id": "SMg8XCa9t0tvaZga",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Backup Workflow - Every Day",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "e11b216a-727c-4aad-b137-a8a7d12e9d77",
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        48,
+        528
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "id": "b32c4fbf-d366-449a-8907-b4b460106124",
+      "name": "n8n",
+      "type": "n8n-nodes-base.n8n",
+      "position": [
+        304,
+        624
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "n8nApi": {
+          "id": "58XPUVCuSgWyNRSN",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "fb6b8a7e-be9d-432f-ab5c-cb98fd3bad81",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        512,
+        624
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 17,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "id": "ef8b0fc9-fd93-492d-be2d-f9a405236b22",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        48,
+        720
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "content": "## Backup to GitHub \nThis workflow will backup all instance workflows to GitHub.\n\nThe files are saved `ID.json` for the filename.\n\n### Setup\nOpen `Globals` node and update the values below 👇\n\n- **repo.owner:** your Github username\n- **repo.name:** the name of your repository\n- **repo.path:** the folder to use within the repository. If it doesn't exist it will be created.\n\n\nIf your username was `john-doe` and your repository was called `n8n-backups` and you wanted the workflows to go into a `workflows` folder you would set:\n\n- repo.owner - john-doe\n- repo.name - n8n-backups\n- repo.path - workflows/\n\n\nThe workflow calls itself using a subworkflow, to help reduce memory usage.",
+        "height": 601,
+        "width": 371,
+        "color": 4
+      },
+      "id": "89a09670-4cf2-4539-b62b-4ceb8b34ef46",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -416,
+        256
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Main workflow loop",
+        "height": 435,
+        "width": 886,
+        "color": 7
+      },
+      "id": "73458d3b-65a7-4c88-9fdf-0b7b44c7036b",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -16,
+        448
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 💡 **Want to learn advanced n8n skills and earn money building workflows?**\n‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎Check out [Scrapes Academy](https://www.skool.com/scrapes/about?ref=21f10ad99f4d46ba9b8aaea8c9f58c34)",
+        "width": 640,
+        "color": 4
+      },
+      "id": "7992a459-484d-4953-8815-d87d97b0445e",
+      "name": "Sticky Note16",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -16,
+        256
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "Bw2DfzZPpWBQ510C",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/Bw2DfzZPpWBQ510C",
+          "cachedResultName": "Sub Backup Workflow - Every Day"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "id": "b770ee52-03b6-42b6-89e5-a511ad6b4f5a",
+      "name": "Call 'Sub Backup Workflow - Every Day'",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "position": [
+        848,
+        640
+      ],
+      "typeVersion": 1.2,
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "pinData": {
+    "Schedule Trigger": [
+      {
+        "json": {
+          "timestamp": "2026-01-19T12:47:50.698+01:00",
+          "Readable date": "January 19th 2026, 12:47:50 pm",
+          "Readable time": "12:47:50 pm",
+          "Day of week": "Monday",
+          "Year": "2026",
+          "Month": "January",
+          "Day of month": "19",
+          "Hour": "12",
+          "Minute": "47",
+          "Second": "50",
+          "Timezone": "Europe/Berlin (UTC+01:00)"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Africa/Cairo",
+    "saveExecutionProgress": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "createdAt": "2026-02-10T15:16:19.462Z",
+      "updatedAt": "2026-02-10T15:16:19.462Z",
+      "role": "workflow:owner",
+      "workflowId": "SMg8XCa9t0tvaZga",
+      "projectId": "MwHoDPY5SoqTt3hY"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2026-02-10T15:16:08.742Z",
+      "updatedAt": "2026-02-10T15:16:08.742Z",
+      "id": "l3WH0MdMAXNn3Iww",
+      "name": "production"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2026-02-10T15:31:35.000Z",
+  "versionId": "8ac150d0-a025-40ca-959d-b10562a26d22"
+}
