@@ -150,7 +150,7 @@
       "parameters": {
         "content": "## Main workflow loop",
         "height": 435,
-        "width": 886,
+        "width": 1030,
         "color": 7
       },
       "id": "73458d3b-65a7-4c88-9fdf-0b7b44c7036b",
@@ -259,6 +259,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2026-02-10T15:31:35.000Z",
-  "versionId": "8ac150d0-a025-40ca-959d-b10562a26d22"
+  "updatedAt": "2026-02-11T14:10:23.000Z",
+  "versionId": "791aeaa9-62ab-4ebb-ab48-e64fe13fe31c"
 }
