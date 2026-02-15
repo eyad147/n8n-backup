@@ -137,6 +137,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "General",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -271,6 +278,17 @@
           }
         ]
       ]
+    },
+    "General": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2026-02-10T14:27:36.921Z",
@@ -291,8 +309,8 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -768,
-        256
+        -816,
+        416
       ],
       "id": "31279bd5-5043-4f38-a405-2afe6c4bbc29",
       "name": "Telegram Trigger",
@@ -311,7 +329,7 @@
         "messages": {
           "messageValues": [
             {
-              "message": "you are a smart and intent classifier for a restaurant's automated system. Your job is to analyze the user's message and categorize it into one of two paths based on their intent:  \"about_the_restaurant\": Use this if the user is asking about the menu, food prices, location, or opening hours.  \"make_an_order\": Use this if the user wants to buy food, check the status of an existing order, or cancel an order.  User Message: {{ $json.message.text }} Response: Reply with ONLY the category name."
+              "message": "\"You are an intent classification assistant for a restaurant chatbot. Your ONLY job is to analyze the user's message and categorize it into one of three exact text strings based on their intent.\n\nCategories:\n\nabout_the_restaurant: Use this if the user asks about the menu, ingredients, location, opening hours, dietary restrictions, or general FAQs.\n\nmake_an_order: Use this if the user wants to place a new order, check the status of an existing order, update an order, or cancel an order.\n\ngeneral: Use this for simple greetings (e.g., 'hello', 'hi'), goodbyes, or unrelated chatter.\n\nYou must output ONLY the category name. Do not include any other text, punctuation, or conversational filler.\""
             }
           ]
         },
@@ -320,8 +338,8 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
       "position": [
-        -288,
-        256
+        -336,
+        416
       ],
       "id": "dd4fa143-9b1a-4671-9be5-ecdcb39e0ca2",
       "name": "Basic LLM Chain"
@@ -336,8 +354,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
       "position": [
-        -288,
-        432
+        -336,
+        592
       ],
       "id": "e0afe14a-42a4-48b6-981f-391ebf518577",
       "name": "OpenRouter Chat Model",
@@ -359,8 +377,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        -704,
-        704
+        608,
+        416
       ],
       "id": "185b2f8f-ff84-49e8-9df7-b2ec3ac3bad0",
       "name": "AI Agent"
@@ -380,8 +398,8 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
       "typeVersion": 1.3,
       "position": [
-        -528,
-        944
+        784,
+        688
       ],
       "id": "02c82aa2-fb33-49b7-82bc-458d27c360fe",
       "name": "Supabase Vector Store",
@@ -400,8 +418,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
       "position": [
-        -816,
-        912
+        496,
+        656
       ],
       "id": "9c29296e-d50e-4d8f-b8de-4087d469bf2f",
       "name": "OpenRouter Chat Model1",
@@ -420,8 +438,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        -656,
-        928
+        656,
+        672
       ],
       "id": "bfc5eee4-1d63-4313-81a4-bfa54b7aa2ed",
       "name": "Simple Memory"
@@ -433,8 +451,8 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -432,
-        1120
+        880,
+        864
       ],
       "id": "66e87312-bbd1-4409-997a-617b72f7ecb2",
       "name": "Embeddings Google Gemini",
@@ -624,6 +642,31 @@
               },
               "renameOutput": true,
               "outputKey": "=make an order "
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e18b2a7c-b009-483b-bc3f-1666531a2fec",
+                    "leftValue": "={{ $json.text }}",
+                    "rightValue": "general",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "General "
             }
           ]
         },
@@ -632,8 +675,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.3,
       "position": [
-        16,
-        240
+        -32,
+        400
       ],
       "id": "a4d570b1-0155-4cd8-860a-39f955c7a155",
       "name": "Switch"
@@ -672,8 +715,8 @@
       "type": "@n8n/n8n-nodes-langchain.toolCode",
       "typeVersion": 1.3,
       "position": [
-        208,
-        848
+        1520,
+        592
       ],
       "id": "fd738095-bb8e-4e8b-bcf3-20b97d4c0a34",
       "name": "code_tool"
@@ -685,7 +728,7 @@
             {
               "id": "69bc9012-6ef9-4a6d-8968-f7cc4f6a390a",
               "name": "prompt",
-              "value": "### ROLE You are the \"Restaurant Concierge\". You have NO internal memory of the menu. You MUST use tools for every factual response.\n\n### TOOL PROTOCOLS\n\nMenu & Pricing: You MUST call the Supabase Vector Store tool for every question about food or prices. Do not guess. If the tool returns no data, tell the user we don't have that item.\n\nLocation & Contact: If the user asks for the address, location, or how to contact us, use the message_Sender tool to send our official \"Digital Business Card\" text.\n\n### CRITICAL RULE \nDo not tell the user you \"can\" find the information. Call the tool, get the information, and then provide it.",
+              "value": "\"ACT AS: An Expert Restaurant Knowledge Base.\n\nSTRICT SOURCE CONTROL:\n\nYou have NO internal knowledge of restaurants.\n\nEvery answer MUST be sourced from the Supabase Vector Store.\n\nQuery the store for: Menu details, Ingredients, Opening Hours, Location/Address, and Parking info.\n\nINTERACTION LOGIC:\n\nIf the user's question is vague, use Supabase Vector Store to find related categories and ask for clarification.\n\nFormat the output clearly using bullet points for readability.\n\nUse the message_Sender tool to transmit the final formatted answer to the user.\n\nIf the user transitions to ordering, immediately suggest they say 'I want to place an order' to switch modes.\"",
               "type": "string"
             }
           ]
@@ -695,8 +738,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        448,
-        320
+        160,
+        240
       ],
       "id": "216a1af0-9620-4d5b-9c89-158cb689bee7",
       "name": "about_the_restaurant"
@@ -708,7 +751,7 @@
             {
               "id": "69bc9012-6ef9-4a6d-8968-f7cc4f6a390a",
               "name": "prompt",
-              "value": "### ROLE You are the \"Orders Manager\". You have direct access to the restaurant's database.\n\n### TOOL PROTOCOLS\n\nA. Modifying an Order (Add/Erase items):\n\nIdentify: Ask for the Order ID.\n\nFetch Current State: Call get_orders to see what is currently in the \"Order Details\" column.\n\nCalculate New Order: > - If the user says \"add a pizza,\" take the old list and add the pizza to it.\n\nIf the user says \"remove the soda,\" take the old list and strip the soda out.\n\nExecute Update: Call the update_order tool with the Order ID and the New Order String.\n\nConfirm: Show the user the updated list and say \"Your order has been updated! ✅\"\n\nB. Placing a New Order:\n\nCollect Name, Phone, Address.\n\nCall code_tool for an ID.\n\nCall add_order to save.\n\nC. Cancelling an Order:\n\nCall get_orders to verify.\n\nCall cancel_order to change status to \"Cancelled\".\n\n### CRITICAL RULE \nIf a user wants to change an order, you must use get_orders first so you don't accidentally delete their other items when updating the row.",
+              "value": "🚨 CRITICAL BEHAVIOR FIX\n\nYou MUST NOT assume a user is registered unless ALL required fields exist and are non-empty in the database.\n\nHaving only telegram_username DOES NOT mean the user is registered.\n\nA user is considered “Registered” ONLY IF:\n • customer_name exists AND is not empty\n • phone_number exists AND is valid format\n • delivery_address exists AND is not empty\n\nIf any of these are missing → user is NOT registered.\n\n⸻\n\n1️⃣ REGISTRATION VALIDATION RULE\n\nBefore processing any order:\n 1. Retrieve full user record from database.\n 2. Validate each required field individually.\n 3. If ANY field is missing, null, empty string, or placeholder → treat user as NEW.\n\nYou MUST explicitly check:\n • name != null AND name != “”\n • phone != null AND phone length >= 10 digits\n • address != null AND address != “”\n\nIf validation fails:\nAsk only for missing fields.\n\n⸻\n\n2️⃣ ORDER CONFIRMATION LOCK\n\nYou are NOT allowed to:\n • Confirm an order\n • Write to Google Sheets\n • Trigger workflow\n\nUNLESS:\n • All required customer data exists\n • User explicitly confirms order summary\n\nIf not confirmed → DO NOT SAVE.\n\n⸻\n\n3️⃣ MANDATORY CONFIRMATION STEP\n\nBefore writing to database, you MUST send:\n\n🧾 Order Summary:\n • Items\n • Quantities\n • Name\n • Phone\n • Address\n • Order Type\n\nThen ask:\n\n“Please reply YES to confirm or MODIFY to change.”\n\nOnly if user replies YES exactly:\n→ Proceed to save.\n\nAny other response:\n→ Do NOT save.\n\n⸻\n\n4️⃣ FORCED CANCEL LOGIC (Very Important Fix)\n\nIf user says any of:\n • الغي\n • إلغاء\n • Cancel\n • مش عايزه\n • وقف الطلب\n\nYou MUST:\n\nSTEP 1:\nRetrieve latest order from database.\n\nSTEP 2:\nCheck if order_status == “pending”\n\nIF pending:\n • Update order_status = “cancelled”\n • Append to update_order sheet\n • Confirm cancellation:\n\n“❌ Your order has been successfully cancelled.”\n\nIF already cancelled:\n“⚠️ This order is already cancelled.”\n\nIF no active order found:\n“⚠️ No active order found to cancel.”\n\nNEVER ignore cancel intent.\nNEVER ask unnecessary questions during cancel.\nALWAYS execute cancel immediately if valid.\n\n⸻\n\n5️⃣ NO FAKE REGISTRATION RULE\n\nYou are strictly forbidden from saying:\n\n“You are already registered”\n\nUNLESS:\nYou validated ALL required fields.\n\nIf only telegram ID exists:\nYou must say:\n\n“I need your full name, phone number, and delivery address to complete registration.”\n\n⸻\n\n6️⃣ ORDER SAVE CONDITIONS\n\nOrder can only be saved if:\n\n✔️ User fully registered\n✔️ Items parsed successfully\n✔️ Confirmation received\n✔️ No active conflicting order\n\nIf any condition fails:\nDO NOT SAVE.\n\n⸻\n\n7️⃣ UPDATE ORDER RULE\n\nIf user modifies order:\n • Retrieve latest pending order\n • Apply modification\n • Send updated summary\n • Ask for confirmation again\n • Save update only after confirmation\n\n⸻\n\n8️⃣ STRICT RESPONSE MODE\n\nYou are:\n • Deterministic\n • Validation-first\n • Not assumption-based\n • Not optimistic\n • Not guessing\n\nYou do NOT:\n • Auto-confirm\n • Auto-register\n • Ignore cancel\n • Skip confirmation\n • Skip validation\n\n⸻\n\n9️⃣ FAILURE PREVENTION CHECKLIST (Internal)\n\nBefore confirming anything, mentally verify:\n\n☐ Name validated\n☐ Phone validated\n☐ Address validated\n☐ Items parsed\n☐ Confirmation received\n☐ Status updated correctly\n\nIf any unchecked → STOP.",
               "type": "string"
             }
           ]
@@ -718,8 +761,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        240,
-        384
+        256,
+        416
       ],
       "id": "520be5c5-f95a-45ff-a851-09b5beb35d84",
       "name": "make_an_order"
@@ -737,8 +780,8 @@
       "type": "n8n-nodes-base.telegramTool",
       "typeVersion": 1.2,
       "position": [
-        -224,
-        912
+        1088,
+        656
       ],
       "id": "c17e2dd8-47dd-44e5-a8d5-a9a6d49deff8",
       "name": "message_Sender",
@@ -748,7 +791,8 @@
           "id": "KeeQXdCrbf3k25IK",
           "name": "Telegram account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -858,8 +902,8 @@
       "type": "n8n-nodes-base.googleSheetsTool",
       "typeVersion": 4.7,
       "position": [
-        -96,
-        896
+        1216,
+        640
       ],
       "id": "5b70966e-c5d1-4ff6-a615-e71affdbe782",
       "name": "cancel_order",
@@ -891,11 +935,11 @@
           "mappingMode": "defineBelow",
           "value": {
             "item": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('item', ``, 'string') }}",
-            "from": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('from', ``, 'string') }}",
             "date": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('date', ``, 'string') }}",
             "phone": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('phone', ``, 'string') }}",
             "statuse": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('statuse', ``, 'string') }}",
-            "order number": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('order_number', ``, 'string') }}"
+            "order number": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('order_number', ``, 'string') }}",
+            "clint": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('clint', ``, 'string') }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -910,8 +954,8 @@
               "removed": false
             },
             {
-              "id": "from",
-              "displayName": "from",
+              "id": "clint",
+              "displayName": "clint",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -968,8 +1012,8 @@
       "type": "n8n-nodes-base.googleSheetsTool",
       "typeVersion": 4.7,
       "position": [
-        16,
-        880
+        1328,
+        624
       ],
       "id": "c1738c82-5186-4015-8f93-10b04ab9169d",
       "name": "add_order",
@@ -1009,8 +1053,8 @@
       "type": "n8n-nodes-base.googleSheetsTool",
       "typeVersion": 4.7,
       "position": [
-        112,
-        864
+        1424,
+        608
       ],
       "id": "46dc17bb-a93f-4101-9cc8-2206e70f150b",
       "name": "get_orders",
@@ -1130,8 +1174,8 @@
       "type": "n8n-nodes-base.googleSheetsTool",
       "typeVersion": 4.7,
       "position": [
-        320,
-        832
+        1632,
+        576
       ],
       "id": "95fb6beb-31c5-4949-8acd-c7ed85794b99",
       "name": "update_order",
@@ -1165,11 +1209,34 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -528,
-        256
+        -576,
+        416
       ],
       "id": "b9ac0f99-7dc1-4ebb-943a-8230db855e8f",
       "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "69bc9012-6ef9-4a6d-8968-f7cc4f6a390a",
+              "name": "prompt",
+              "value": "You are a friendly greeting assistant.\n\nInstructions:\n\nGreet the user.\n\nInform them you can help with 'Orders' or 'Restaurant Information'.\n\nUse the message_Sender tool to send this greeting to their Telegram.\n\nDo not perform any database actions here.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        160,
+        592
+      ],
+      "id": "1fd6aba7-9fe0-488f-b8d6-fc4fa2da61e4",
+      "name": "General"
     },
     {
       "parameters": {
@@ -1182,8 +1249,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -336,
-        704
+        1056,
+        400
       ],
       "id": "2ff84065-5eee-4562-a90b-e92f95f5c108",
       "name": "Send a text message",
@@ -1211,7 +1278,7 @@
   ],
   "staticData": {
     "node:Google Drive Trigger": {
-      "lastTimeChecked": "2026-02-11T13:21:31Z"
+      "lastTimeChecked": "2026-02-15T09:30:08Z"
     }
   },
   "tags": [
@@ -1235,6 +1302,6 @@
     }
   ],
   "triggerCount": 2,
-  "updatedAt": "2026-02-11T13:49:42.000Z",
-  "versionId": "a3c1bb45-61ca-45be-bf4c-23f9324dbbee"
+  "updatedAt": "2026-02-15T14:27:11.000Z",
+  "versionId": "d0987baa-883c-4d75-abfb-a525de8c2e76"
 }
