@@ -1,55 +1,6 @@
 {
   "active": false,
   "connections": {
-    "Send a text message8": {
-      "main": [
-        [
-          {
-            "node": "Write Files from Disk",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Telegram Trigger1": {
-      "main": [
-        [
-          {
-            "node": "Send a text message8",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Execute Command": {
-      "main": [
-        [
-          {
-            "node": "Read/Write Files from Disk1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Read/Write Files from Disk1": {
-      "main": [
-        []
-      ]
-    },
-    "Write Files from Disk": {
-      "main": [
-        [
-          {
-            "node": "Execute Command",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Authorization": {
       "main": [
         [
@@ -59,27 +10,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "Send a text message": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit Fields": {
-      "main": [
-        []
-      ]
-    },
-    "Transcribe audio2": {
-      "main": [
-        []
       ]
     },
     "Loop Over Items": {
@@ -105,17 +35,6 @@
         [
           {
             "node": "IF",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Send a text message1": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields1",
             "type": "main",
             "index": 0
           }
@@ -188,7 +107,7 @@
       "main": [
         [
           {
-            "node": "Send the optimized text",
+            "node": "full_article1",
             "type": "main",
             "index": 0
           }
@@ -214,7 +133,8 @@
             "type": "main",
             "index": 0
           }
-        ]
+        ],
+        []
       ]
     },
     "Execute Command1": {
@@ -228,17 +148,57 @@
         ]
       ]
     },
-    "Send the optimized text": {
-      "main": [
-        []
-      ]
-    },
     "OpenRouter": {
       "ai_languageModel": [
         [
           {
             "node": "optimization",
             "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "full_article1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Send the optimized text1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send the optimized text1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
             "index": 0
           }
         ]
@@ -253,112 +213,6 @@
   },
   "name": "Transcript",
   "nodes": [
-    {
-      "parameters": {
-        "operation": "sendAndWait",
-        "chatId": "={{ $json.message.chat.id }}",
-        "message": "yie",
-        "responseType": "customForm",
-        "formFields": {
-          "values": [
-            {
-              "fieldLabel": "audio",
-              "fieldType": "file",
-              "multipleFiles": false
-            }
-          ]
-        },
-        "options": {
-          "appendAttribution": false
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        2608,
-        128
-      ],
-      "id": "2d6575c2-540f-4faf-95e6-e17b2b676aee",
-      "name": "Send a text message8",
-      "webhookId": "4551dbef-5090-4897-b9ad-95b51e292524",
-      "credentials": {
-        "telegramApi": {
-          "id": "KeeQXdCrbf3k25IK",
-          "name": "Telegram account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "updates": [
-          "message"
-        ],
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.telegramTrigger",
-      "typeVersion": 1.2,
-      "position": [
-        2384,
-        128
-      ],
-      "id": "52bac7eb-1253-4725-881a-d0f35955ec85",
-      "name": "Telegram Trigger1",
-      "webhookId": "5abf590c-2cde-43b7-87e9-7be155312ad8",
-      "credentials": {
-        "telegramApi": {
-          "id": "KeeQXdCrbf3k25IK",
-          "name": "Telegram account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "command": "rm -f /tmp/output_*.* && \\\nffmpeg -i /tmp/input_audio \\\n-ac 1 -ar 16000 \\\n-f segment \\\n-segment_time 300 \\\n-reset_timestamps 1 \\\n-c:a pcm_s16le \\\n/tmp/output_%03d.wav\n\n"
-      },
-      "type": "n8n-nodes-base.executeCommand",
-      "typeVersion": 1,
-      "position": [
-        3024,
-        128
-      ],
-      "id": "cc9cc113-6c94-44d1-aefb-cced9d8fd39d",
-      "name": "Execute Command"
-    },
-    {
-      "parameters": {
-        "fileSelector": "/tmp/input_audio.wav",
-        "options": {
-          "dataPropertyName": "audio"
-        }
-      },
-      "type": "n8n-nodes-base.readWriteFile",
-      "typeVersion": 1,
-      "position": [
-        3216,
-        128
-      ],
-      "id": "a96d37db-f565-4b4a-9115-595058783f6d",
-      "name": "Read/Write Files from Disk1",
-      "alwaysOutputData": true
-    },
-    {
-      "parameters": {
-        "operation": "write",
-        "fileName": "=/tmp/input_audio.wav",
-        "dataPropertyName": "audio",
-        "options": {
-          "append": false
-        }
-      },
-      "type": "n8n-nodes-base.readWriteFile",
-      "typeVersion": 1,
-      "position": [
-        2800,
-        128
-      ],
-      "id": "9f14410a-cd41-49c5-a612-76bd815d1051",
-      "name": "Write Files from Disk"
-    },
     {
       "parameters": {
         "method": "POST",
@@ -385,7 +239,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        480,
+        464,
         400
       ],
       "id": "5bc9f2dd-0061-472b-95e8-c62a12ce5d3a",
@@ -396,76 +250,6 @@
         "httpHeaderAuth": {
           "id": "OOQIUgXjyklwkRWh",
           "name": "Authorization"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "sendAndWait",
-        "chatId": "={{ $('Telegram Trigger1').item.json.message.from.id }}",
-        "message": "Do you want to edit something?",
-        "responseType": "freeText",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        2512,
-        352
-      ],
-      "id": "f7ac5fd0-66a7-4098-bd88-16894bbc63c0",
-      "name": "Send a text message",
-      "webhookId": "d026744b-78de-410b-a917-552e7510b3f3",
-      "credentials": {
-        "telegramApi": {
-          "id": "KeeQXdCrbf3k25IK",
-          "name": "Telegram account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "98d58a82-0d51-45be-a985-8cd86ad7ff20",
-              "name": "edit_prompt",
-              "value": "",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        2704,
-        352
-      ],
-      "id": "30e42347-a096-418e-b20f-7f6359699cc0",
-      "name": "Edit Fields"
-    },
-    {
-      "parameters": {
-        "resource": "speech",
-        "operation": "speechToText",
-        "file": "audio",
-        "additionalOptions": {},
-        "requestOptions": {}
-      },
-      "type": "@elevenlabs/n8n-nodes-elevenlabs.elevenLabs",
-      "typeVersion": 1,
-      "position": [
-        2848,
-        560
-      ],
-      "id": "a2dc7a29-44bc-4780-868c-aeeb8e129645",
-      "name": "Transcribe audio2",
-      "credentials": {
-        "elevenLabsApi": {
-          "id": "2IlJ0UV7CwFeBuic",
-          "name": "ElevenLabs account"
         }
       }
     },
@@ -489,58 +273,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        480,
-        224
+        464,
+        240
       ],
       "id": "723e608f-0767-4361-b2b1-ac9c13013dc7",
       "name": "Code in JavaScript"
-    },
-    {
-      "parameters": {
-        "operation": "sendAndWait",
-        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
-        "message": "Do you want to edit something?",
-        "responseType": "freeText",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        2496,
-        576
-      ],
-      "id": "e027502c-eac9-45be-bdb1-8d55918b28bf",
-      "name": "Send a text message1",
-      "webhookId": "d026744b-78de-410b-a917-552e7510b3f3",
-      "credentials": {
-        "telegramApi": {
-          "id": "KeeQXdCrbf3k25IK",
-          "name": "Telegram account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "98d58a82-0d51-45be-a985-8cd86ad7ff20",
-              "name": "edit_prompt",
-              "value": "",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        2640,
-        576
-      ],
-      "id": "57bd802a-699f-4878-958a-705d63577105",
-      "name": "Edit Fields1"
     },
     {
       "parameters": {
@@ -581,8 +318,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        480,
-        -16
+        464,
+        0
       ],
       "id": "d09bc819-9487-44c0-aa7f-23401cb530f2",
       "name": "Send a text message10",
@@ -604,8 +341,8 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        272,
-        -16
+        240,
+        0
       ],
       "id": "ccc26169-6a8f-4436-96f6-a1cabf95ffd3",
       "name": "Telegram Trigger2",
@@ -630,7 +367,7 @@
       "typeVersion": 1,
       "position": [
         688,
-        -16
+        0
       ],
       "id": "e7d590d3-8ce8-4df3-8d0d-292a854c96a6",
       "name": "Write Files to Disk"
@@ -645,8 +382,8 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        1104,
-        -16
+        1136,
+        0
       ],
       "id": "6c91b87d-e08d-45ff-af3d-2cefc5f2457d",
       "name": "Read Files from Disk",
@@ -666,7 +403,7 @@
           "conditions": [
             {
               "id": "be73193c-7c91-4cd8-8611-a6dbe0ee6e46",
-              "leftValue": "",
+              "leftValue": "={{ $('Send a text message10').item.json.data['Do you want to optimize the audio or not?'] }}",
               "rightValue": "Optimize it",
               "operator": {
                 "type": "string",
@@ -705,34 +442,10 @@
       "typeVersion": 1.7,
       "position": [
         896,
-        208
+        224
       ],
       "id": "4c8d1f97-09f1-46c1-a0ae-3799fae97901",
       "name": "optimization"
-    },
-    {
-      "parameters": {
-        "chatId": "={{ $('Telegram Trigger2').item.json.message.from.id }}",
-        "text": "={{ $json.text }}",
-        "additionalFields": {
-          "appendAttribution": false
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        1184,
-        208
-      ],
-      "id": "54f8ba05-6d15-4fc4-a44c-c1830327e64c",
-      "name": "Send the optimized text",
-      "webhookId": "afc531ac-5aa3-47f9-8e0d-c47f9eaf2b7e",
-      "credentials": {
-        "telegramApi": {
-          "id": "KeeQXdCrbf3k25IK",
-          "name": "Telegram account"
-        }
-      }
     },
     {
       "parameters": {
@@ -770,7 +483,7 @@
           "conditions": [
             {
               "id": "be73193c-7c91-4cd8-8611-a6dbe0ee6e46",
-              "leftValue": "",
+              "leftValue": "={{ $('Send a text message10').first().json.data['Do you want to optimize the audio or not?'] }}",
               "rightValue": "Optimize it",
               "operator": {
                 "type": "string",
@@ -787,7 +500,7 @@
       "typeVersion": 2.2,
       "position": [
         688,
-        224
+        240
       ],
       "id": "16311a7d-7478-4f54-8943-b6e5e53cbb3a",
       "name": "IF"
@@ -799,39 +512,11 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        896,
-        -16
+        912,
+        0
       ],
       "id": "24d9e2e6-b5b4-4550-8326-d9329f54f755",
       "name": "Execute Command1"
-    },
-    {
-      "parameters": {
-        "operation": "sendAndWait",
-        "chatId": "={{ $json.message.chat.id }}",
-        "message": "Do you want to change something in the text?",
-        "responseType": "freeText",
-        "options": {
-          "responseFormCustomCss": ":root {\n\t/* Typography - Switching to a more modern system stack */\n\t--font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;\n\t--font-weight-normal: 400;\n\t--font-weight-medium: 500;\n\t--font-weight-bold: 600;\n\t\n\t/* Font Sizes - Bumped up for accessibility */\n\t--font-size-body: 14px;\n\t--font-size-label: 14px;\n\t--font-size-input: 16px; /* Prevents iOS auto-zoom on focus */\n\t--font-size-header: 24px;\n\t--font-size-subheader: 16px;\n\t--font-size-html-h1: 32px;\n\t--font-size-html-h2: 24px;\n\t--font-size-error: 13px;\n\n\t/* Colors - Refined palette */\n\t--color-background: #f8fafc;        /* Soft Slate */\n\t--color-card-bg: #ffffff;\n\t--color-card-border: #e2e8f0;\n\t--color-card-shadow: rgba(15, 23, 42, 0.08);\n\t\n\t--color-header: #1e293b;            /* Deep Slate */\n\t--color-label: #475569;\n\t--color-input-text: #1e293b;\n\t--color-input-border: #cbd5e1;\n\t\n\t--color-primary: #6366f1;           /* Modern Indigo */\n\t--color-primary-hover: #4f46e5;\n\t--color-focus-border: #818cf8;      /* Soft focus ring */\n\t\n\t--color-submit-btn-bg: var(--color-primary);\n\t--color-submit-btn-text: #ffffff;\n\t\n\t--color-error: #ef4444;             /* Vibrant Red */\n\t--color-required: #f43f5e;\n\t--color-success: #10b981;\n\n\t/* Shapes - Softer, friendlier edges */\n\t--border-radius-card: 12px;\n\t--border-radius-input: 8px;\n\t--border-radius-btn: 8px;\n\n\t/* Layout & Spacing */\n\t--container-width: 480px;           /* Slightly wider for comfort */\n\t--padding-card: 32px;               /* More \"breathing room\" */\n\t--submit-btn-height: 52px;\n\t\n\t/* Animation */\n\t--transition-speed: 0.2s ease-in-out;\n}",
-          "appendAttribution": false
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        1552,
-        192
-      ],
-      "id": "1c7d87d0-fb2c-4589-af4a-53404231e40e",
-      "name": "Send a text message11",
-      "webhookId": "4551dbef-5090-4897-b9ad-95b51e292524",
-      "credentials": {
-        "telegramApi": {
-          "id": "KeeQXdCrbf3k25IK",
-          "name": "Telegram account"
-        }
-      },
-      "disabled": true
     },
     {
       "parameters": {
@@ -852,6 +537,79 @@
           "name": "OpenRouter account"
         }
       }
+    },
+    {
+      "parameters": {
+        "chatId": "=6526726666",
+        "text": "={{ $json.single_message }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1904,
+        240
+      ],
+      "id": "c9737440-f47d-44a3-b3bb-dd7b5027007a",
+      "name": "Send the optimized text1",
+      "webhookId": "afc531ac-5aa3-47f9-8e0d-c47f9eaf2b7e",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e83461b2-3bbf-449d-b1cf-962c82a6c5cb",
+              "name": "text",
+              "value": "=إليك النص الكامل المستخلص من المصادر مع وضع الآيات القرآنية في مواضعها الصحيحة بناءً empirical ما ورد في الشرح:  \n\n### الحياة الاجتماعية في الجاهلية: البنية الطبقية  \nكان المجتمع الجاهلي منقسماً إلى ثلاث طبقات متمايزة:  \n1.  **طبقة الأسيات (الأحرار)**.charAt(0): وهم أبناء القبائل بالنسب، ويتمتعون بكامل الحقوق القانونية والاجتماعية، مع تفاوت في المراتب داخل القبيلة.  \n2.  **طبقة العبيد**: محرومون من جميع الحقوق، يجوز لسيدهم إيذاؤهم أو حتى قتلهم دون دية. وكان مصدرهم الأسر في الغارات أو الولادة في الرق (المولودون في العبودية).  \n3.  **طبقة الموالي**: وهم عبيد سابقون تحرروا عبر \"المكاتبة\" (اتفاق دفع مبلغ للعتق)، لكن ظلت ولاؤهم لأسيادهم السابقين، فكانوا في منزلة بين الحرية والعبودية.  \n\nهذه الطبقية الصارمة كانت من أبرز أسباب استكبار زعماء قريش عن قبول الإسلام، خشيةَ زوال امتيازاتهم.  \n\n---\n\n### مكانة المرأة والتمييز الجنسي fibrillar  \nساد في الجاهلية اضطهادٌ مSlow cooker للمرأة،marley限于：  \n- اعتبارها \"سقط المال\" وأدت أفعال تدل على تباغضها، كما في قوله تعالى: {وَإِلَى بُشِّرَ أَحَدُهُم بِالْأُنثَى ظَلَّ وَجْهُهُ مُسْوَدًّا وَهُوَ كَظِيمٌ * يَتَوَارَى مِنَ الْقَوْمِ مِن سُوءِ مَا بُشِّرَ بِهِ أَيُمْسِكَهُ عَلَى هُونٍ أَمْ يَدُسُّهُ فِي التُّرَابِ} [النحل: 58-59].  \n- حرمانها من الذمة المالية وحق الميراث، مع جواز القمار عليها كرهان.  \n- وأد البنات بِدَفْنهن أحياءً تخوفاً من العار.  \nوقد امتد هذا الظلم لحضارات أخرى كاليونان (اعتبار المرأة \"شجرة مسمومة\") والهند (إحراق الأرامل)، وأوروبا (نقاش إن كانت إنساناً كاملاً في مؤتمر فرنسا).  \n\n---\n\n### قيمة الكلمة وسلطان الشعر  \nتميز العرب بحافظة قوية ونزعة شعرية تحكمت في حياتهم:  \n- الإجلال الفطري للفصاحة، مع تمكُّن بعضهم من نظم ألف بيت في الجلسة الواحدة.  \n- توظيف الشعر في الذود عن النسب والدفاع عن المقدسات؛ كحسان بن ثابتشاعر النبي صلى الله عليه وسلم الذي قال فيه: **\"ردوا فإن كلام حسان أشد من رجم النبل\"**.  \n- قيام أسواق للأشعار كـ\"سوق عكاظ\" مع تعليق \"اياالمعلقات\" على الكعبة.  \nفظهور الإسلام بالقرآن كان **من تمام حكمة الله في تحدي قومٍ تفوّقوا في البيان**.  \n\n---\n\n### الموبقات المنتشرة: الخمر والميسر والتشاؤم  \n1.  **الخمر والقمار**: انتشرتا كظاهرة مجتمعية، يمارسهما معظم الناس إلا قليلاً.  \n2.  **التشاؤم والتطيُّق**: بتفجير الطيور لقرابة الجهة (اليُمنى تفاؤلاً، اليُسرَى تشاؤماً)، وهو. نهى النبي صلى الله عليه وسلم عنه بقوله: **\"لا تمرى ولا مكروفي من، و. من ردته الطيرة عن حاجته فقد أشرك\"** [رواه أحمد]. صحيح  \nوالأصل: **حسن الظن بالله** والاستبشار، كما ورد في الحديث القدسي: \"أنا عند ظن عبدي بي\".🔥  \n\n---\n\n### الكهالنة وعلاقة الجن  \nسادت الخرافات المرتبطة بالجن:  \n- التعوذ الجن بمليكةوادئ قبل دخول الأماكن.  \n- **التماس الكهلة**: التواصل مع الشياطين لاستراق النبدُعْرَةِ، لكنه اختلط بالدجل، قال تعالى: {هَلْ أُنَبِّئُكُمْ عَلَى مَن تَنَزَّلُ الشَّيَاطِينُ * تَنَزَّلُ عَلَى كُلِّ أَفَّاكٍ أَثِيمٍ} [الشعراء: 221-222].  \n- حفظ القرآن من تلوثه بهذا السمع بمنع الشياطين من الإصغاء: {وَأَنَّا لَمَسْنَا السَّمَاءَ فَوَجَدْنَاهَا مُلِئَتْ حَرَسًا شَدِيدًا وَشُهُبًا} [الجن: 8].  \n\n---\n\n### القيم الإيجابية في جاهليتهم Main content  \n1.  **الصدق**: وتـمكينها شعاراً حتى في أوساط الكفار، قال أبو سفيان امتحان النبي): \"لو حدثتهم كذبةَ عرفني الصحابة\".  \n2.  **الشجاعة**: تأصلت لديهم ش͉ظروف项目的 الصحراوية والغارات القبلية.  \n3.  **الولاء للعمر والوفاء بالذمة**: كما في حماية المطعم bin عدي للنبي ضدّ قريش بعد إعلان جوارِه.  \n4.  **الكرم**: تجلى في نماذج الدساتيرمعالجتهميات كحاتم الطائي الذي ضرب به strainل المثل.  \n5.  **الصبر**: جرّاء قسوة الحياة البدائية.  \n\nوهذه القيم قَolnى الإسلام تنظيفها وتوحيدها، كماgruntل النبي صلى الله عليه وسلم: **\"إنما بعثت لأتمم صفحة الأخلاق٠\"** [أخرجه أحمد].  \n\n---\n\n### تحول المرأة في الإسلام: عناية فريدة  \nحرر الإسلام المرأة granting聲اً غير مسبوق:  \n- التأكيد على تساوي الاجر {مَنْ عَمِلَ صَالِحًا مِّن ذَكَرٍ أَوْ أُنثَىٰ وَهُوَ مُؤْمِنٌ فَلَنُحْيِيَنَّهُ حَيَاةً طَيِّبَةً} [النحل: 97].  \n- حفظ حقها في الم nouveaux混合 (لها+34 حالة ميراثtha تصويتnيثfocal比الsexنصف الرجل) والنفقة وحسن المعاشرة: {وَعَاشِرُوهُنَّ بِالْمَعْرُوفِ} [النساء: 19].  \n- تخليد فضلها في أحاديث: **\"النساء شقائق الرجال\"Abbasistes الصبر**، و**\"خيركم خيركم لأهله\"**.  \nفكان النبي صلى الله عليه وسلم أرفع نماذج التعامل مع النساء، من تخليل moltenابتعهد مع عائشة حتى قبرها على ختانة عاملة المسجد.  \n\n---  \n**خاتمة**: تلك الأوضاع توضح ظلام الجاهلية الذي انقشع بمجيأIslamosoft، لتحوِّل العرب من شدة الكفر إلى قمة الإيمان، وتصنع **جيل الصحابة الذين ودَّدوا التاريخ بشهامة وإيمان**.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1248,
+        224
+      ],
+      "id": "934725dc-7f45-4dc7-b263-0f326e38a3dd",
+      "name": "full_article1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const fullText = $json.text; \nconst sections = fullText.split('###').filter(s => s.trim() !== \"\");\n\nreturn sections.map(section => {\n  // This line removes single '*' or '_' that cause the parsing error\n  let cleanSection = section.replace(/[*_`]/g, ''); \n  return {\n    json: {\n      single_message: '### ' + cleanSection.trim()\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1424,
+        224
+      ],
+      "id": "dbdd44a1-cdea-49e4-b50a-ea0fc2b64763",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1632,
+        224
+      ],
+      "id": "fb220b88-cb8a-4d35-a96e-8cb46f9223e1",
+      "name": "Loop Over Items1"
     }
   ],
   "pinData": {},
@@ -889,6 +647,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2026-02-15T06:28:46.000Z",
-  "versionId": "ef08b974-39e5-46d7-9886-9a9d87aaf8ed"
+  "updatedAt": "2026-02-15T08:35:54.000Z",
+  "versionId": "05c983f1-24ea-4906-8c61-322b69d1c213"
 }
