@@ -941,6 +941,283 @@
           }
         ]
       ]
+    },
+    "Link exists": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Audio exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Audio exists": {
+      "main": [
+        [
+          {
+            "node": "Write Files to Disk2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error sender",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sum the text": {
+      "main": [
+        [
+          {
+            "node": "Send the optimized text3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sum the text1": {
+      "main": [
+        [
+          {
+            "node": "IF2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Send the optimized text4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Authorization4": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items4": {
+      "main": [
+        [
+          {
+            "node": "Sum the text1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Authorization4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message13": {
+      "main": [
+        [
+          {
+            "node": "Link exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger6": {
+      "main": [
+        [
+          {
+            "node": "Send a text message13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write Files to Disk2": {
+      "main": [
+        [
+          {
+            "node": "Execute Command6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Files from Disk2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send the transcription2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "optimization6": {
+      "main": [
+        [
+          {
+            "node": "full_article2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send the transcription2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF2": {
+      "main": [
+        [
+          {
+            "node": "optimization6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command6": {
+      "main": [
+        [
+          {
+            "node": "Read Files from Disk2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "optimization6",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "full_article2": {
+      "main": [
+        [
+          {
+            "node": "Sum the text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript4": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send the transcription3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2026-01-25T05:46:48.732Z",
@@ -3328,6 +3605,681 @@
       ],
       "id": "06ae8a44-33a8-483e-b770-c0ff5023e38a",
       "name": "Loop Over Items3"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger6').item.json.message.from.id }}",
+        "text": "Please upload either an audio OR a link, not both.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        4096,
+        3408
+      ],
+      "id": "e2a44fb1-06a4-4ba3-b2b4-999193f28ad8",
+      "name": "Error sender",
+      "webhookId": "4bcb5505-8b3d-4737-8c9a-25c01a7307ce",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "6b791be0-38ee-4b17-be57-db14e6707992",
+              "leftValue": "={{ $json.data.Link }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "9678968a-5630-4b4b-9453-112351d26e93",
+              "leftValue": "={{ $json.data.audio.filename }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3472,
+        3568
+      ],
+      "id": "1f879d5c-8dd8-4032-926b-ffec6573600f",
+      "name": "Link exists"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "76815259-b7e9-4233-86ad-4211fca0d414",
+              "leftValue": "={{ $json.data.audio.filename }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "a2cafeba-e156-48b9-ac47-6db79f6bc580",
+              "leftValue": "={{ $json.data.Link }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3696,
+        3584
+      ],
+      "id": "6f0b3ac8-11a5-4e9f-931c-d125c890b94f",
+      "name": "Audio exists"
+    },
+    {
+      "parameters": {
+        "jsCode": "const fullText = $json.text; \nconst sections = fullText.split('###').filter(s => s.trim() !== \"\");\n\nreturn sections.map(section => {\n  // This line removes single '*' or '_' that cause the parsing error\n  let cleanSection = section.replace(/[*_`]/g, ''); \n  return {\n    json: {\n      single_message: '### ' + cleanSection.trim()\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4528,
+        3792
+      ],
+      "id": "7e44bf8c-0ef5-4d82-9b56-55b58434ab58",
+      "name": "Sum the text"
+    },
+    {
+      "parameters": {
+        "url": "=https://yt-api.p.rapidapi.com/get_transcript",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{ $json.data.Link.includes('v=') ? $json.data.Link.split('v=')[1].split('&')[0] : $json.data.Link.split('/').pop().split('?')[0] }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-RapidAPI-Key",
+              "value": "970856cc67mshe02b661d30ff9f3p1e5fd1jsn97b7f226c046"
+            },
+            {
+              "name": "X-RapidAPI-Host",
+              "value": "yt-api.p.rapidapi.com"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3760,
+        3232
+      ],
+      "id": "3bc14a31-661a-4032-ae97-df32bd5b6118",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// استبدل 'transcript' باسم الحقل الصحيح من Whisper Node\nconst full = items.map(i => i.json.text).join(\"\\n\\n\"); // فصل كل مقطع بسطرين\n\nreturn [{ json: { fullTranscript: full } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3568,
+        3808
+      ],
+      "id": "b4a88df8-53d0-41cc-bf71-d6ef9f0b9c19",
+      "name": "Sum the text1"
+    },
+    {
+      "parameters": {
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=The \"Deep Discovery\" Prompt \"I am providing a transcript from a YouTube video. Please analyze the text and provide the following:  Executive Summary: A 3-sentence overview of the main message.  Key Themes: Identify the 3–5 most important topics discussed.  Deep Explanation: Explain any complex concepts or cultural/religious references mentioned in the text (specifically focus on the Arabic context if applicable).  Key Quotes: Extract 2–3 powerful or \"must-read\" sentences.  Tone Analysis: Describe the speaker's tone (e.g., educational, motivational, solemn).  Transcript Text: {{ $json.combinedText }}. All of this in arabic\""
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        4464,
+        3088
+      ],
+      "id": "8694708e-f386-427c-a5af-a5bf5d1d81a3",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-r1-0528:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        4560,
+        3232
+      ],
+      "id": "93773db1-2bb1-4d9d-bc6e-3ca559db2b2c",
+      "name": "OpenRouter1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "BydLlZ8E9UmD3tL5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/audio/transcriptions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "audio"
+            },
+            {
+              "name": "model",
+              "value": "whisper-large-v3"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3568,
+        3968
+      ],
+      "id": "27e7c62c-72e6-419e-a40d-316f6a0ee426",
+      "name": "Authorization4",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "OOQIUgXjyklwkRWh",
+          "name": "Authorization"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3296,
+        3888
+      ],
+      "id": "29471e4e-6251-4d86-b3a5-2ddd5b838eb1",
+      "name": "Loop Over Items4"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "={{ $json.message.chat.id }}",
+        "message": "Put the link or audio not both of them please",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "audio",
+              "fieldType": "file",
+              "multipleFiles": false
+            },
+            {
+              "fieldLabel": "Do you want to optimize the audio or not?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Optimize it"
+                  },
+                  {
+                    "option": "Send directly "
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Link",
+              "placeholder": "Link"
+            }
+          ]
+        },
+        "options": {
+          "responseFormCustomCss": ":root {\n\t/* Typography - Switching to a more modern system stack */\n\t--font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;\n\t--font-weight-normal: 400;\n\t--font-weight-medium: 500;\n\t--font-weight-bold: 600;\n\t\n\t/* Font Sizes - Bumped up for accessibility */\n\t--font-size-body: 14px;\n\t--font-size-label: 14px;\n\t--font-size-input: 16px; /* Prevents iOS auto-zoom on focus */\n\t--font-size-header: 24px;\n\t--font-size-subheader: 16px;\n\t--font-size-html-h1: 32px;\n\t--font-size-html-h2: 24px;\n\t--font-size-error: 13px;\n\n\t/* Colors - Refined palette */\n\t--color-background: #f8fafc;        /* Soft Slate */\n\t--color-card-bg: #ffffff;\n\t--color-card-border: #e2e8f0;\n\t--color-card-shadow: rgba(15, 23, 42, 0.08);\n\t\n\t--color-header: #1e293b;            /* Deep Slate */\n\t--color-label: #475569;\n\t--color-input-text: #1e293b;\n\t--color-input-border: #cbd5e1;\n\t\n\t--color-primary: #6366f1;           /* Modern Indigo */\n\t--color-primary-hover: #4f46e5;\n\t--color-focus-border: #818cf8;      /* Soft focus ring */\n\t\n\t--color-submit-btn-bg: var(--color-primary);\n\t--color-submit-btn-text: #ffffff;\n\t\n\t--color-error: #ef4444;             /* Vibrant Red */\n\t--color-required: #f43f5e;\n\t--color-success: #10b981;\n\n\t/* Shapes - Softer, friendlier edges */\n\t--border-radius-card: 12px;\n\t--border-radius-input: 8px;\n\t--border-radius-btn: 8px;\n\n\t/* Layout & Spacing */\n\t--container-width: 480px;           /* Slightly wider for comfort */\n\t--padding-card: 32px;               /* More \"breathing room\" */\n\t--submit-btn-height: 52px;\n\t\n\t/* Animation */\n\t--transition-speed: 0.2s ease-in-out;\n}",
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3264,
+        3568
+      ],
+      "id": "f34659c9-be79-4eee-848f-66399addf4e1",
+      "name": "Send a text message13",
+      "webhookId": "4551dbef-5090-4897-b9ad-95b51e292524",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        3040,
+        3568
+      ],
+      "id": "646e2f8f-43ad-47de-8738-8dd5c55bfd5b",
+      "name": "Telegram Trigger6",
+      "webhookId": "5abf590c-2cde-43b7-87e9-7be155312ad8",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/tmp/input_audio",
+        "dataPropertyName": "audio",
+        "options": {
+          "append": false
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        3984,
+        3568
+      ],
+      "id": "8d56638a-87cc-4f60-bf09-7936f3884452",
+      "name": "Write Files to Disk2"
+    },
+    {
+      "parameters": {
+        "fileSelector": "=/tmp/output_*.wav",
+        "options": {
+          "dataPropertyName": "audio"
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        4432,
+        3568
+      ],
+      "id": "32d5cdf3-2c15-4fef-8968-37c6aae158ea",
+      "name": "Read Files from Disk2",
+      "alwaysOutputData": false,
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "be73193c-7c91-4cd8-8611-a6dbe0ee6e46",
+              "leftValue": "={{ $('Send a text message13').item.json.data['Do you want to optimize the audio or not?'] }}",
+              "rightValue": "Optimize it",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3792,
+        3968
+      ],
+      "id": "1a01019e-6f68-4571-af6d-7ba18528da0a",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Sum the text1').item.json.fullTranscript }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "أعد صياغة وترتيب النص العشوائي التالي وتنسيقه ليظهر بأسلوب بحثي وشرعي دقيق، مع الالتزام الصارم بالتعليمات التالية:\n\nالمقدمة: ابدأ إجابتك بهذه العبارة حرفياً ولا تضف قبلها أي شيء: \"إليك النص الكامل المستخلص من المصادر مع وضع الآيات القرآنية في مواضعها الصحيحة بناءً على ما ورد في الشرح:\"\n\nتنسيق الآيات القرآنية: ضع جميع الآيات القرآنية بين أقواس معقوفة بهذا الشكل: {} ، وتأكد من إدراجها في سياقها الصحيح لتدعيم المعنى أو كدليل على الفكرة.\n\nالخط العريض (Bold): استخدم الخط العريض لتمييز المصطلحات الشرعية الأساسية، والكلمات المفتاحية، والاستنتاجات القوية (مثل: توحيد الربوبية، الخلق والملك والتدبير، باطل من عدة أوجه).\n\nالتقسيم والفقرات: قسّم النص إلى فقرات واضحة ومترابطة منطقياً (مثلاً: فقرة لعرض الفكرة أو الشبهة، فقرة للرد عليها، وفقرة للقواعد الشرعية).\n\nالأسلوب: حافظ على لغة عربية فصحى، رصينة، وأكاديمية متزنة تناسب النصوص الشرعية والعقدية.\n\nالنص المراد تنسيقه بناءً على هذه القواعد هو:\n\n*** مثال مرجعي ***\nليك النص الكامل المستخلص من المصادر مع وضع الآيات القرآنية في مواضعها الصحيحة بناءً على ما ورد في الشرح:  يجوز القبوريون صرف أي نوع من أنواع العبادة لغير الله، مثل التوسل والنذر والدعاء والذبح**، طالما أنهم يعتقدون أنه لا شريك له في **الخلق والملك والتدبير. وهم بذلك يقدمون النذور للقبور ويستغيثون بغير الله قائلين: \"مدد يا بدوي، مدد يا حسين\"، مبررين ذلك بأنهم لا يعتقدون في هؤلاء الخلق أو الملك.  وقد رد أهل السنة والجماعة عليهم بأن هذا التعريف (عدم وجود شريك في الخلق والملك والتدبير) هو توحيد الربوبية فقط**، وهو لا يكفي للدخول في الإسلام؛ فمن اكتفى بتوحيد الربوبية ولم يوحد الله في ألوهيته فقد كفر. والسبب في ذلك أن الرسل ما أُرسلت، وما حدثت الخصومة بينهم وبين أقوامهم، إلا لتثبيت **توحيد الألوهية. فالرسل لم تأتِ لتعرّف الأقوام بوجود الله فحسب، بل جاءت لتدعوهم لعبادته وحده، كما في قوله تعالى: {يَا أَيُّهَا النَّاسُ اعْبُدُوا رَبَّكُمْ الَّذِي خَلَقَكُمْ}.  لقد كان المشركون مقرين بتوحيد الربوبية، والدليل من القرآن أن الله أقام عليهم الحجة بقوله: {وَلَئِنْ سَأَلْتَهُمْ مَنْ خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ لَيَقُولُنَّ اللَّهُ}. فهم معترفون بوجود الخالق والمدبر والمصرف للكون، حتى في تلبيتهم حول الكعبة كانوا يقولون: \"لا شريك لك، إلا شريكاً هو لك، تملكه وما ملك\". ومع ذلك، فإن هذا الإقرار لم ينفعهم لأنهم أشركوا في العبادة.  أما الشبهة الثانية التي يطرحها القبوريون، فهي ادعاؤهم أن المشركين لم يكونوا صادقين حين أقروا بأن الله هو الخالق والمدبر، بل كانوا يكذبون لإرضاء المسلمين. ويستدلون على ذلك بآيات يظهر فيها إنكار المشركين لشركهم يوم القيامة، مثل قوله تعالى: {وَاللَّهِ رَبِّنَا مَا كُنَّا مُشْرِكِينَ}.   والرد على هذا الادعاء بأنه **باطل من عدة أوجه**؛ فمنها أن الآيات القرآنية صريحة في إثبات أن هذا كان اعتقادهم الحقيقي، وقد رتب الله على هذا الإقرار إلزامهم وتوبيخهم. فلو كان كلامهم كذباً، لما قامت عليهم الحجة بكونهم يقرون بالخالق ثم يعبدون غيره.  ويجب التنبيه هنا إلى الفرق بين الفعل والفاعل في مسألة الكفر؛ فصرف العبادة لغير الله (كالدعاء أو الذبح أو النذر) هو فعل كفري. لكن الحكم على \"فاعل\" بعينه بأنه كافر له ضوابط وشروط، ويجب التأكد من انتفاء الموانع وتوافر الشروط قبل تكفير المعين. فطالب العلم يجب أن يتقيد بالدين لا بالهوى، فالكفر حكم شرعي لا يخضع للاستحسان البشري.  وقاعدة التحسين والتقبيح مرجعها إلى الله عز وجل، فلا يجوز أن نستحسن أمراً بآرائنا أو نغير الأحكام بتغير الأزمان والأهواء، بل الدين ثابت لا يتغير. ومن استحسن بعقله ما لم يشرعه الله فقد شرع، وهذا باطل."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        4000,
+        3792
+      ],
+      "id": "152fb411-ac60-4aff-954f-6bfa1e8503fd",
+      "name": "optimization6"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger6').item.json.message.from.id }}",
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        4016,
+        3984
+      ],
+      "id": "6a725aff-8c70-4e5a-b34b-fbe6dab7d589",
+      "name": "Send the transcription2",
+      "webhookId": "bc18e284-5fed-45da-bf4d-ab528aa65a88",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "be73193c-7c91-4cd8-8611-a6dbe0ee6e46",
+              "leftValue": "={{ $('Send a text message13').first().json.data['Do you want to optimize the audio or not?'] }}",
+              "rightValue": "Optimize it",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3792,
+        3808
+      ],
+      "id": "2edf2a67-66ec-471c-bcd5-8ebb18c511ce",
+      "name": "IF2"
+    },
+    {
+      "parameters": {
+        "command": "=rm -f /tmp/output_*.* && \\\nffmpeg -i /tmp/input_audio \\\n-ac 1 -ar 16000 \\\n-f segment \\\n-segment_time 300 \\\n-reset_timestamps 1 \\\n-c:a pcm_s16le \\\n/tmp/output_%03d.wav\n"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        4208,
+        3568
+      ],
+      "id": "6e6de888-3328-4d85-aa2e-d1835fa13271",
+      "name": "Execute Command6"
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-r1-0528:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        4208,
+        4016
+      ],
+      "id": "17ab9170-dd90-418e-be39-20a3c210ff28",
+      "name": "OpenRouter2",
+      "credentials": {
+        "openRouterApi": {
+          "id": "BydLlZ8E9UmD3tL5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "=6526726666",
+        "text": "={{ $json.single_message }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        4736,
+        3792
+      ],
+      "id": "a936939d-abd4-4cd9-a0cf-49994c24d0d3",
+      "name": "Send the optimized text3",
+      "webhookId": "afc531ac-5aa3-47f9-8e0d-c47f9eaf2b7e",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e83461b2-3bbf-449d-b1cf-962c82a6c5cb",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4352,
+        3792
+      ],
+      "id": "e9ce84ca-c2f4-461d-8827-d547a365a1e0",
+      "name": "full_article2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const chunks = [];\nconst items = $input.all();\n\nfor (const item of items) {\n  const data = item.json;\n  // Safely extract and combine the transcript text\n  const transcriptArray = Array.isArray(data.transcript) ? data.transcript : [];\n  const fullText = transcriptArray.map(t => t.text || \"\").join(\" \").trim();\n  \n  // Telegram's limit is 4096. We use 4000 to leave room for headers/formatting.\n  const chunkSize = 4000;\n  \n  for (let i = 0; i < fullText.length; i += chunkSize) {\n    chunks.push({\n      json: {\n        // We add a part number so you can track the sequence in Telegram\n        part: (i / chunkSize) + 1,\n        total_parts: Math.ceil(fullText.length / chunkSize),\n        combinedText: fullText.substring(i, i + chunkSize)\n      }\n    });\n  }\n}\n\nreturn chunks;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3968,
+        3232
+      ],
+      "id": "0faeff7f-4a33-4f65-8dfa-be82a4de62a3",
+      "name": "Code in JavaScript4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d47d3676-b158-45c1-ab8b-45cb0e0d0d38",
+              "leftValue": "={{ $('Send a text message13').item.json.data['Do you want to optimize the audio or not?'] }}",
+              "rightValue": "=Optimize it",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4176,
+        3232
+      ],
+      "id": "6639662b-75d2-46a0-a526-241adcc45202",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger6').item.json.message.from.id }}",
+        "text": "=Part {{ $json.part }}/{{ $json.total_parts }}: {{ $json.combinedText }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        4784,
+        3088
+      ],
+      "id": "0dbb4834-ff62-464e-b672-4ef92906b29d",
+      "name": "Send the optimized text4",
+      "webhookId": "4bcb5505-8b3d-4737-8c9a-25c01a7307ce",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger6').item.json.message.from.id }}",
+        "text": "=Part {{ $json.part }}/{{ $json.total_parts }}: {{ $json.combinedText }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        4432,
+        3328
+      ],
+      "id": "e4c6c037-11ce-4cde-bf28-b5cad82a0efc",
+      "name": "Send the transcription3",
+      "webhookId": "4bcb5505-8b3d-4737-8c9a-25c01a7307ce",
+      "credentials": {
+        "telegramApi": {
+          "id": "KeeQXdCrbf3k25IK",
+          "name": "Telegram account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -3377,6 +4329,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2026-02-15T10:02:35.000Z",
-  "versionId": "15b46501-384f-4f27-9a80-e5ca3b1b7bd9"
+  "updatedAt": "2026-02-19T12:27:14.000Z",
+  "versionId": "d5fb1dd2-c466-4640-8b35-cf85bfcbf43d"
 }
